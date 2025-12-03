@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-$mysqli = new mysqli("localhost", "root", "", "CentralizedResearchRepository_userdb");
+$mysqli = new mysqli("sql207.infinityfree.com", "if0_40577910", "CTURepo2025", "if0_40577910_repo_db");
 if ($mysqli->connect_error) {
     die("Connection failed: " . $mysqli->connect_error);
 }
@@ -25,7 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($row = $result->fetch_assoc()) {
             if (password_verify($password, $row['password_hash'])) {
                 $_SESSION['admin_id']     = $row['id'];
-                $_SESSION['admin_name']   = $row['fullname'];  
+                $_SESSION['admin_name']   = $row['fullname'];
                 $_SESSION['admin_user']   = $row['username'];
                 $_SESSION['admin_email']  = $row['email'];
                 $_SESSION['admin_role']   = $row['role'];
@@ -68,7 +68,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       <p>Online Research Repoistory Library System – Cebu Technological University</p>
       <br>
 
-      <?php if ($loginMessage): 
+      <?php if ($loginMessage):
           $color = ($loginMessageType === 'success') ? 'green' : 'red';
       ?>
       <div style="color:<?= $color ?>; margin-bottom: 15px;">

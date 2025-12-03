@@ -1,5 +1,5 @@
 <?php
-$mysqli = new mysqli("localhost", "root", "", "CentralizedResearchRepository_userdb");
+$mysqli = new mysqli("sql207.infinityfree.com", "if0_40577910", "CTURepo2025", "if0_40577910_repo_db");
 if ($mysqli->connect_error) { die("Connection failed: " . $mysqli->connect_error); }
 
 // Initialize message variables
@@ -45,7 +45,7 @@ if (isset($_POST['editCategory'])) {
     $id = $_POST['id'];
     $name = trim($_POST['name']);
     $description = trim($_POST['description']);
-    
+
     if (empty($name)) {
         $messageTitle = "⚠ Error!";
         $messageContent = "Category name cannot be empty!";

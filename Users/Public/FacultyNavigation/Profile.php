@@ -6,7 +6,7 @@ if (!isset($_SESSION['faculty_id'])) {
 
 $faculty_id = $_SESSION['faculty_id'];
 
-$mysqli = new mysqli("localhost", "root", "", "CentralizedResearchRepository_userdb");
+$mysqli = new mysqli("sql207.infinityfree.com", "if0_40577910", "CTURepo2025", "if0_40577910_repo_db");
 if ($mysqli->connect_errno) die("Failed to connect: " . $mysqli->connect_error);
 
 $stmt = $mysqli->prepare("SELECT fullname, department, email, phone, profile_image FROM faculty WHERE faculty_id = ?");

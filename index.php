@@ -1,5 +1,5 @@
 <?php
 // Redirect all visitors to the login page
-header("Location: Users/LoginUser.php");
+header("Location: Users/Public/LoginUser.php");
 exit;
 ?>

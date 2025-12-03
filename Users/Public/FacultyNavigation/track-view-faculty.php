@@ -1,6 +1,6 @@
 <?php
 session_start();
-$mysqli = new mysqli("localhost", "root", "", "CentralizedResearchRepository_userdb");
+$mysqli = new mysqli("sql207.infinityfree.com", "if0_40577910", "CTURepo2025", "if0_40577910_repo_db");
 
 $faculty_id = intval($_SESSION['faculty_id'] ?? 0);
 if (!$faculty_id) exit('Unauthorized');

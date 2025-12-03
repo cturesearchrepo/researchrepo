@@ -1,5 +1,5 @@
 <?php
-$mysqli = new mysqli("localhost", "root", "", "CentralizedResearchRepository_userdb");
+$mysqli = new mysqli("sql207.infinityfree.com", "if0_40577910", "CTURepo2025", "if0_40577910_repo_db");
 if ($mysqli->connect_error) {
     die("Connection failed: " . $mysqli->connect_error);
 }
@@ -62,7 +62,7 @@ if ($result) {
             <td>
               <?= htmlspecialchars($row['status']) ?>
               <?php if (strtolower($row['status']) === 'deactivated' && !empty($row['lock_until'])): ?>
-                <br><small class="text-danger">Unlocks in: 
+                <br><small class="text-danger">Unlocks in:
                   <span class="countdown" data-until="<?= htmlspecialchars($row['lock_until']) ?>"></span>
                 </small>
               <?php endif; ?>
@@ -185,9 +185,9 @@ function updateCountdowns() {
         const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
         const seconds = Math.floor((diff % (1000 * 60)) / 1000);
 
-        span.textContent = 
-            String(hours).padStart(2,'0') + ":" + 
-            String(minutes).padStart(2,'0') + ":" + 
+        span.textContent =
+            String(hours).padStart(2,'0') + ":" +
+            String(minutes).padStart(2,'0') + ":" +
             String(seconds).padStart(2,'0');
     });
 }

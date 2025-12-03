@@ -7,10 +7,10 @@ if (!isset($_SESSION['faculty_id'])) {
 
 $faculty_id = $_SESSION['faculty_id'];
 
-$mysqli = new mysqli("localhost", "root", "", "CentralizedResearchRepository_userdb");
+$mysqli = new mysqli("sql207.infinityfree.com", "if0_40577910", "CTURepo2025", "if0_40577910_repo_db");
 if ($mysqli->connect_error) die("Connection failed: " . $mysqli->connect_error);
 
-date_default_timezone_set("Asia/Manila"); 
+date_default_timezone_set("Asia/Manila");
 $hour = date("H");
 $greeting = ($hour < 12) ? "Good Morning" : (($hour < 18) ? "Good Afternoon" : "Good Evening");
 
@@ -123,7 +123,7 @@ body.dark-mode .card { background: #2b2b2b; color: #e4e4e4; }
     <i class="bi bi-moon-fill"></i>
   </button>
   <button class="btn btn-outline-primary d-lg-none" onclick="toggleSidebar()">☰</button>
-  
+
   <div class="d-flex align-items-center justify-content-center flex-grow-1">
     <img src="../uploads/faculty/<?= htmlspecialchars($faculty['profile_image'] ?? 'default.png'); ?>" class="rounded-circle me-2" width="40" height="40" alt="Profile">
     <span style="font-weight: 500; font-size: 16px;"><?= $greeting . ', ' . htmlspecialchars($facultyName); ?> 👋</span>
@@ -167,15 +167,15 @@ const logoutBtn = document.getElementById('logoutBtn'),
       logoutModal = document.getElementById('logoutModal'),
       cancelLogout = document.getElementById('cancelLogout');
 
-logoutBtn.addEventListener('click', e => { 
-    e.preventDefault(); 
-    logoutModal.style.display = 'flex'; 
+logoutBtn.addEventListener('click', e => {
+    e.preventDefault();
+    logoutModal.style.display = 'flex';
 });
 
 cancelLogout.addEventListener('click', () => logoutModal.style.display = 'none');
 
-window.addEventListener('click', e => { 
-    if (e.target === logoutModal) logoutModal.style.display = 'none'; 
+window.addEventListener('click', e => {
+    if (e.target === logoutModal) logoutModal.style.display = 'none';
 });
 
 </script>

@@ -11,7 +11,7 @@ if (!$studentId || !$researchId || $rating < 1 || $rating > 5) {
     exit;
 }
 
-$mysqli = new mysqli("localhost", "root", "", "CentralizedResearchRepository_userdb");
+$mysqli = new mysqli("sql207.infinityfree.com", "if0_40577910", "CTURepo2025", "if0_40577910_repo_db");
 if ($mysqli->connect_errno) {
     echo json_encode(['success' => false, 'message' => 'Database connection failed.']);
     exit;

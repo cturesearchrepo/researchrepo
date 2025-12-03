@@ -1,6 +1,6 @@
 <?php
 session_start();
-$mysqli = new mysqli("localhost", "root", "", "CentralizedResearchRepository_userdb");
+$mysqli = new mysqli("sql207.infinityfree.com", "if0_40577910", "CTURepo2025", "if0_40577910_repo_db");
 if ($mysqli->connect_error) {
     die("DB error: " . $mysqli->connect_error);
 }
@@ -42,7 +42,7 @@ if (!empty($_FILES['feedback_file']['name'])) {
 
 // Insert feedback
 $stmt = $mysqli->prepare("
-    INSERT INTO research_feedback (research_id, reviewer_id, feedback, feedback_file, status) 
+    INSERT INTO research_feedback (research_id, reviewer_id, feedback, feedback_file, status)
     VALUES (?, ?, ?, ?, ?)
 ");
 $stmt->bind_param("iisss", $researchId, $facultyDbId, $feedback, $feedbackFile, $status);

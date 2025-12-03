@@ -1,7 +1,7 @@
 <?php
 header('Content-Type: application/json');
 
-$mysqli = new mysqli("localhost", "root", "", "CentralizedResearchRepository_userdb");
+$mysqli = new mysqli("sql207.infinityfree.com", "if0_40577910", "CTURepo2025", "if0_40577910_repo_db");
 if ($mysqli->connect_error) {
     die(json_encode(['status'=>'error','message'=>'DB connection failed']));
 }

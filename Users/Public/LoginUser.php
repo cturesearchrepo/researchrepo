@@ -1,6 +1,9 @@
 <?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 session_start();
-$mysqli = new mysqli("localhost", "root", "", "CentralizedResearchRepository_userdb");
+$mysqli = new mysqli("sql207.infinityfree.com", "if0_40577910", "CTURepo2025", "if0_40577910_repo_db");
 if ($mysqli->connect_error) {
     die(json_encode(['status' => 'error', 'message' => "Connection failed: " . $mysqli->connect_error]));}
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -55,7 +58,7 @@ function checkLogin($conn, $table, $idColumn, $userid, $password) {
             if ($prefResult->num_rows === 0) {
                 echo json_encode(['status' => 'redirect', 'page' => "preferences.php"]);} else {
                 echo json_encode(['status' => 'success', 'page' => $dashboardPage]);}
-        } else { 
+        } else {
             $_SESSION['faculty_id'] = $user['faculty_id'];
             $dashboardPage = "../Public/FacultyNavigation/FacultyDashboard.php";
             echo json_encode(['status' => 'success', 'page' => $dashboardPage]);}
@@ -118,10 +121,10 @@ document.addEventListener("DOMContentLoaded", function () {
         .then(res => res.json())
         .then(data => {
             if (data.status === 'redirect' || data.status === 'success') {
-                window.location.href = data.page;} 
+                window.location.href = data.page;}
             else if (data.status === 'locked') {
                 showLockCountdown(data.unlock_time);
-                if (data.message) alert(data.message);} 
+                if (data.message) alert(data.message);}
             else {
                 alert(data.message);
             } })
@@ -138,7 +141,7 @@ function togglePassword(fieldId, button) {
         img.alt = "Hide Password";
     } else {
         field.type = "password";
-        img.src = "Photos/icons8-closed-eye-24.png"; 
+        img.src = "Photos/icons8-closed-eye-24.png";
         img.alt = "Show Password";  }}
 function showLockCountdown(untilTime) {
     let unlockTime = new Date(untilTime).getTime();

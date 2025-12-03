@@ -1,8 +1,8 @@
 <?php
 session_start();
-header('Content-Type: text/plain'); 
+header('Content-Type: text/plain');
 
-$mysqli = new mysqli("localhost", "root", "", "CentralizedResearchRepository_userdb");
+$mysqli = new mysqli("sql207.infinityfree.com", "if0_40577910", "CTURepo2025", "if0_40577910_repo_db");
 if ($mysqli->connect_error) {
     exit("Error: Database connection failed: " . $mysqli->connect_error);
 }
@@ -24,7 +24,7 @@ if (!$reviewer_id) {
 
 $research_id = intval($_POST['id']);
 $feedback_text = trim($_POST['feedback']);
-$new_status = $_POST['status'] ?? $_POST['prev_status'] ?? 'Pending'; 
+$new_status = $_POST['status'] ?? $_POST['prev_status'] ?? 'Pending';
 $file_path = null;
 
 if (isset($_FILES['feedback_file']) && $_FILES['feedback_file']['error'] === UPLOAD_ERR_OK) {
@@ -32,13 +32,13 @@ if (isset($_FILES['feedback_file']) && $_FILES['feedback_file']['error'] === UPL
     $ext = pathinfo($file['name'], PATHINFO_EXTENSION);
     $safe_filename = "feedback_" . $research_id . "_" . time() . "." . $ext;
     $upload_dir = __DIR__ . "/uploads/feedback/" . date("Y") . "/";
-    
+
     if (!is_dir($upload_dir)) {
         if (!mkdir($upload_dir, 0755, true)) {
              exit("Error: Failed to create upload directory.");
         }
     }
-    
+
     $target_file = $upload_dir . $safe_filename;
 
     if (move_uploaded_file($file['tmp_name'], $target_file)) {
@@ -92,10 +92,10 @@ $decision_statuses = ['ApprovedbyPanelist', 'RejectedbyPanelist', 'RevisionRequi
 
 if (in_array($new_status, $decision_statuses)) {
     $reviewUpdateStmt = $mysqli->prepare("
-        UPDATE research_reviewers SET status = ? 
+        UPDATE research_reviewers SET status = ?
         WHERE research_id = ? AND reviewer_id = ?
     ");
-    
+
     if (!$reviewUpdateStmt->bind_param("sii", $new_status, $research_id, $reviewer_id)) {
         $success = false;
         goto end_transaction;

@@ -2,11 +2,11 @@
 session_start();
 
 if (!isset($_SESSION['student_id'])) {
-    header("Location: LoginUser.php"); 
+    header("Location: LoginUser.php");
     exit();
 }
 
-$mysqli = new mysqli("localhost", "root", "", "CentralizedResearchRepository_userdb");
+$mysqli = new mysqli("sql207.infinityfree.com", "if0_40577910", "CTURepo2025", "if0_40577910_repo_db");
 if ($mysqli->connect_error) {
     die("Connection failed: " . $mysqli->connect_error);
 }
@@ -97,7 +97,7 @@ body { font-family: 'Segoe UI', sans-serif; background-color: #f4f6f9; transitio
 .student-card {
     background: rgba(255,255,255,0.1);
     border-radius: 12px;
-    text-align: center; 
+    text-align: center;
     padding: 10px 5px;
     margin-bottom: 15px;
 }
@@ -121,7 +121,7 @@ body { font-family: 'Segoe UI', sans-serif; background-color: #f4f6f9; transitio
 .sidebar-menu-container {
     display: flex;
     flex-direction: column;
-    flex: 1; 
+    flex: 1;
     overflow: hidden;
 }
 
@@ -181,7 +181,7 @@ body { font-family: 'Segoe UI', sans-serif; background-color: #f4f6f9; transitio
 }
 
 .sidebar-logout {
-    flex-shrink: 0; 
+    flex-shrink: 0;
     padding-top: 10px;
     border-top: 1px solid rgba(255,255,255,0.2);
 }
@@ -261,7 +261,7 @@ body { font-family: 'Segoe UI', sans-serif; background-color: #f4f6f9; transitio
     </div>
 
     <div class="student-card">
-        <img src="../uploads/students/<?= htmlspecialchars($studentData['profile_image'] ?: 'logoCtu.png') ?>" 
+        <img src="../uploads/students/<?= htmlspecialchars($studentData['profile_image'] ?: 'logoCtu.png') ?>"
      alt="Student" class="student-avatar">
         <div class="student-info">
             <p class="student-name"><?= htmlspecialchars($studentData['fullname']) ?></p>

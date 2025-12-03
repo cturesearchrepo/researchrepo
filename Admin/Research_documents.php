@@ -1,10 +1,10 @@
 <?php
-$mysqli = new mysqli("localhost", "root", "", "CentralizedResearchRepository_userdb");
+$mysqli = new mysqli("sql207.infinityfree.com", "if0_40577910", "CTURepo2025", "if0_40577910_repo_db");
 if ($mysqli->connect_errno) {
     die("Failed to connect: " . $mysqli->connect_error);
 }
 
-$query = "SELECT * FROM research_documents 
+$query = "SELECT * FROM research_documents
           WHERE status IN ('Active','ApprovedbyAdmin')
           ORDER BY year_completed DESC";
 
@@ -34,12 +34,12 @@ table.dataTable thead th {
 
 .action-buttons { display: flex; gap: 6px; }
 
-.btn { 
-    padding:6px 10px; 
-    border:none; 
-    border-radius:4px; 
-    cursor:pointer; 
-    font-size:1rem; 
+.btn {
+    padding:6px 10px;
+    border:none;
+    border-radius:4px;
+    cursor:pointer;
+    font-size:1rem;
     display:inline-flex;
     align-items:center;
     justify-content:center;

@@ -4,7 +4,7 @@ if (!isset($_SESSION['admin_id'])) {
     exit();
 }
 
-$mysqli = new mysqli("localhost", "root", "", "CentralizedResearchRepository_userdb");
+$mysqli = new mysqli("sql207.infinityfree.com", "if0_40577910", "CTURepo2025", "if0_40577910_repo_db");
 if ($mysqli->connect_error) {
     die("Connection failed: " . $mysqli->connect_error);
 }
@@ -67,7 +67,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
     $stmt->close();
 
-    $stmt = $mysqli->prepare("REPLACE INTO system_settings (`setting_key`, `setting_value`) VALUES 
+    $stmt = $mysqli->prepare("REPLACE INTO system_settings (`setting_key`, `setting_value`) VALUES
         ('page_length', ?),
         ('default_archive', ?),
         ('theme_color', ?)

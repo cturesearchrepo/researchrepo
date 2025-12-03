@@ -2,18 +2,18 @@
 session_start();
 
 if (!isset($_SESSION['admin_id'])) {
-    header("Location: Adminlogin.php"); 
+    header("Location: Adminlogin.php");
     exit();
 }
 
-$mysqli = new mysqli("localhost", "root", "", "CentralizedResearchRepository_userdb");
+$mysqli = new mysqli("sql207.infinityfree.com", "if0_40577910", "CTURepo2025", "if0_40577910_repo_db");
 if ($mysqli->connect_error) {
     die("Connection failed: " . $mysqli->connect_error);
 }
 $adminData = null;
 $stmt = $mysqli->prepare("
-    SELECT fullname, email, profile_image, role 
-    FROM admins 
+    SELECT fullname, email, profile_image, role
+    FROM admins
     WHERE id = ?
 ");
 $stmt->bind_param("i", $_SESSION['admin_id']);
@@ -326,7 +326,7 @@ body {
         </div>
 
         <div class="admin-card">
-            <img src="<?= htmlspecialchars($adminData['profile_image'] ?: 'Photos/logoCtu.png') ?>" 
+            <img src="<?= htmlspecialchars($adminData['profile_image'] ?: 'Photos/logoCtu.png') ?>"
                  alt="Admin" class="admin-avatar">
             <div class="admin-info">
                 <p class="admin-name"><?= htmlspecialchars($adminData['fullname']) ?></p>
@@ -365,16 +365,16 @@ body {
             case 'home': include __DIR__ . '/home.php'; break;
             case 'manage-categories': include __DIR__ . '/manage-categories.php'; break;
             case 'generate-reports': include __DIR__ . '/generate-reports.php'; break;
-           case 'pending': 
-            include __DIR__ . '/pending-request.php'; 
+           case 'pending':
+            include __DIR__ . '/pending-request.php';
             break;
 
-        case 'request_access': 
-            include __DIR__ . '/Request_access_management.php'; 
+        case 'request_access':
+            include __DIR__ . '/Request_access_management.php';
             break;
 
-        case 'upload_requests': 
-            include __DIR__ . '/research_upload_requests.php'; 
+        case 'upload_requests':
+            include __DIR__ . '/research_upload_requests.php';
         break;
             case 'upload': include __DIR__ . '/upload-research.php'; break;
             case 'documents': include __DIR__ . '/Research_documents.php'; break;
@@ -399,7 +399,7 @@ body {
     </main>
 </div>
 
-<div id="logoutModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; 
+<div id="logoutModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%;
      background: rgba(0,0,0,0.55); justify-content:center; align-items:center; z-index:9999;">
     <div style="background:#fff; padding:25px; border-radius:12px; max-width:400px; width:90%; text-align:center; box-shadow:0 8px 24px rgba(0,0,0,0.25);">
         <h3>You are about to sign out</h3>

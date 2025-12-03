@@ -1,10 +1,10 @@
 <?php
 $faculty_id = intval($_SESSION['faculty_id'] ?? 0);
 if (!$faculty_id) die("Unauthorized access");
-$mysqli = new mysqli("localhost", "root", "", "CentralizedResearchRepository_userdb");
+$mysqli = new mysqli("sql207.infinityfree.com", "if0_40577910", "CTURepo2025", "if0_40577910_repo_db");
 if ($mysqli->connect_errno) die("Failed to connect: " . $mysqli->connect_error);
 
-$query = "SELECT * FROM research_documents 
+$query = "SELECT * FROM research_documents
           WHERE status IN ('Active', 'ApprovedbyAdmin')
           ORDER BY year_completed DESC";
 $result = $mysqli->query($query);
@@ -33,13 +33,13 @@ $result = $mysqli->query($query);
     overflow: auto;
 }
 iframe { width: 100%; height: 80vh; border: none; }
-.btn-info { 
-    background: #17a2b8; 
-    color: white; 
+.btn-info {
+    background: #17a2b8;
+    color: white;
     font-style: none;
 }
-.btn-info:hover { 
-    background: #117a8b; 
+.btn-info:hover {
+    background: #117a8b;
 }
 
 </style>

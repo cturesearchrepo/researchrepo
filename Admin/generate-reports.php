@@ -1,5 +1,5 @@
 <?php
-$mysqli = new mysqli("localhost", "root", "", "CentralizedResearchRepository_userdb");
+$mysqli = new mysqli("sql207.infinityfree.com", "if0_40577910", "CTURepo2025", "if0_40577910_repo_db");
 if ($mysqli->connect_errno) {
     die("Failed to connect to MySQL: " . $mysqli->connect_error);
 }
@@ -9,38 +9,38 @@ $pending_requests = $mysqli->query("SELECT COUNT(*) as total FROM research_acces
 $total_contributors = $mysqli->query("SELECT COUNT(DISTINCT uploaded_by_student) as total FROM research_documents")->fetch_assoc()['total'];
 
 $uploads_per_month = $mysqli->query("
-    SELECT DATE_FORMAT(uploaded_at, '%Y-%m') AS month, COUNT(*) as total 
-    FROM research_documents 
+    SELECT DATE_FORMAT(uploaded_at, '%Y-%m') AS month, COUNT(*) as total
+    FROM research_documents
     WHERE status IN ('ApprovedbyAdmin','Active')
-    GROUP BY month 
+    GROUP BY month
     ORDER BY month ASC
 ")->fetch_all(MYSQLI_ASSOC);
 
 
 $top_researches = $mysqli->query("
-    SELECT r.title, COUNT(a.id) AS access_count 
-    FROM research_documents r 
-    JOIN research_access_requests a ON r.id = a.research_id 
+    SELECT r.title, COUNT(a.id) AS access_count
+    FROM research_documents r
+    JOIN research_access_requests a ON r.id = a.research_id
     WHERE r.status IN ('ApprovedbyAdmin','Active')
-    GROUP BY r.id 
-    ORDER BY access_count DESC 
+    GROUP BY r.id
+    ORDER BY access_count DESC
     LIMIT 5
 ")->fetch_all(MYSQLI_ASSOC);
 
 
 $categories = $mysqli->query("
-    SELECT c.name as category, COUNT(r.id) as total 
-    FROM research_documents r 
-    LEFT JOIN categories c ON r.category_id = c.id 
+    SELECT c.name as category, COUNT(r.id) as total
+    FROM research_documents r
+    LEFT JOIN categories c ON r.category_id = c.id
     WHERE r.status IN ('ApprovedbyAdmin','Active')
     GROUP BY r.category_id
 ")->fetch_all(MYSQLI_ASSOC);
 
 
 $access_expiry = $mysqli->query("
-    SELECT 
-        SUM(CASE WHEN expire_at > NOW() THEN 1 ELSE 0 END) AS active, 
-        SUM(CASE WHEN expire_at <= NOW() THEN 1 ELSE 0 END) AS expired 
+    SELECT
+        SUM(CASE WHEN expire_at > NOW() THEN 1 ELSE 0 END) AS active,
+        SUM(CASE WHEN expire_at <= NOW() THEN 1 ELSE 0 END) AS expired
     FROM research_access_requests
 ")->fetch_assoc();
 
@@ -53,7 +53,7 @@ $submissionTrends = $mysqli->query("
 
 $trendsData = [];
 foreach ($submissionTrends as $row) {
-    $status = strtolower($row['status']); 
+    $status = strtolower($row['status']);
     if ($status === 'approvedbyadmin') $status = 'approved';
     elseif ($status === 'rejectedbyadmin') $status = 'rejected';
     elseif ($status === 'pending') $status = 'pending';
@@ -72,8 +72,8 @@ $topDepartments = $mysqli->query("
 
 
 $topRated = $mysqli->query("
-    SELECT r.title, r.author, r.adviser, 
-           ROUND(AVG(rt.rating), 2) AS avg_rating, 
+    SELECT r.title, r.author, r.adviser,
+           ROUND(AVG(rt.rating), 2) AS avg_rating,
            COUNT(rt.id) AS total_ratings
     FROM research_documents r
     JOIN ratings rt ON r.id = rt.research_id

@@ -1,7 +1,7 @@
 <?php
 header('Content-Type: application/json');
 
-$mysqli = new mysqli("localhost", "root", "", "CentralizedResearchRepository_userdb");
+$mysqli = new mysqli("sql207.infinityfree.com", "if0_40577910", "CTURepo2025", "if0_40577910_repo_db");
 if ($mysqli->connect_errno) {
     echo json_encode(['status'=>'error','message'=>'Database connection failed']);
     exit;
@@ -14,8 +14,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id'])) {
 
     try {
         $stmt = $mysqli->prepare("
-            UPDATE research_documents 
-            SET prev_status = status, status = 'Archive' 
+            UPDATE research_documents
+            SET prev_status = status, status = 'Archive'
             WHERE id = ?
         ");
         $stmt->bind_param("i", $id);

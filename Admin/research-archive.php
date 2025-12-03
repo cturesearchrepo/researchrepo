@@ -1,7 +1,7 @@
 <?php
-$mysqli = new mysqli("localhost", "root", "", "CentralizedResearchRepository_userdb");
-if ($mysqli->connect_error) { 
-    die("Connection failed: " . $mysqli->connect_error); 
+$mysqli = new mysqli("sql207.infinityfree.com", "if0_40577910", "CTURepo2025", "if0_40577910_repo_db");
+if ($mysqli->connect_error) {
+    die("Connection failed: " . $mysqli->connect_error);
 }
 
 // Fetch archived research documents from research_documents table
@@ -85,7 +85,7 @@ $result = $mysqli->query($query);
               <td>
                 <div class="action-buttons">
                   <!-- View button -->
-                  <button class="btn-action btn-view" 
+                  <button class="btn-action btn-view"
                       data-id="<?= $row['id'] ?>"
                       data-title="<?= htmlspecialchars($row['title'], ENT_QUOTES, 'UTF-8') ?>"
                       data-author="<?= htmlspecialchars($row['author'], ENT_QUOTES, 'UTF-8') ?>"
@@ -150,7 +150,7 @@ function renderStars(rating) {
     const halfStar = (rating - fullStars) >= 0.5 ? 1 : 0;
     const emptyStars = 5 - fullStars - halfStar;
     let stars = "★".repeat(fullStars);
-    if (halfStar) stars += "☆"; 
+    if (halfStar) stars += "☆";
     stars += "✩".repeat(emptyStars);
     return `<span class="stars">${stars}</span> <span class="text-muted">(${rating})</span>`;
 }
@@ -203,7 +203,7 @@ $(document).ready(function() {
 });
 function restoreDocument(id) {
     if(confirm("Are you sure you want to restore this document?")) {
-        fetch('restore_research.php', { 
+        fetch('restore_research.php', {
             method: 'POST',
             headers: {'Content-Type':'application/x-www-form-urlencoded'},
             body: 'id=' + encodeURIComponent(id)

@@ -1,6 +1,6 @@
 <?php
 
-$mysqli = new mysqli("localhost", "root", "", "CentralizedResearchRepository_userdb");
+$mysqli = new mysqli("sql207.infinityfree.com", "if0_40577910", "CTURepo2025", "if0_40577910_repo_db");
 if ($mysqli->connect_error) die("Connection failed: " . $mysqli->connect_error);
 
 if (!isset($_SESSION['faculty_id'])) {
@@ -23,8 +23,8 @@ $stmtAdvisory->execute();
 $advisoryResults = $stmtAdvisory->get_result();
 $stmtAdvisory->close();
 $reviewQuery = "
-    SELECT 
-        rd.*, 
+    SELECT
+        rd.*,
         rr.status AS reviewer_status,      /* Panelist's specific status */
         rr.feedback AS reviewer_feedback,  /* Panelist's specific feedback */
         rr.id AS reviewer_entry_id
@@ -215,8 +215,8 @@ function revertStatus(researchId, type) {
 
     const formData = new FormData();
     formData.append("id", researchId);
-    formData.append("type", type); 
-    formData.append("reviewer_id", <?= $facultyDbId ?>); 
+    formData.append("type", type);
+    formData.append("reviewer_id", <?= $facultyDbId ?>);
 
     fetch("revert_status.php", { method: "POST", body: formData })
         .then(res => res.text())
@@ -232,21 +232,21 @@ function revertStatus(researchId, type) {
 function showCancelConfirmation(researchId, type) {
     document.getElementById('confirmMessage').textContent = `Are you sure you want to revert this decision? The status will be set back to PENDING, allowing you to make a new decision.`;
     const confirmModal = new bootstrap.Modal(document.getElementById('confirmModal'));
-    
+
     confirmModal.show();
 
     document.getElementById('confirmYesBtn').onclick = () => {
         confirmModal.hide();
-        revertStatus(researchId, type); 
+        revertStatus(researchId, type);
     };
 }
 
 function openModal(data, type) {
     const modal = new bootstrap.Modal(document.getElementById('facultyModal'));
     const feedbackKey = `feedback_${data.id}`;
-    
+
     // Use the fetched reviewer_feedback (for panelist) or local storage
-    const savedFeedback = data.reviewer_feedback && type === "review" ? data.reviewer_feedback : localStorage.getItem(feedbackKey) || ''; 
+    const savedFeedback = data.reviewer_feedback && type === "review" ? data.reviewer_feedback : localStorage.getItem(feedbackKey) || '';
 
     document.getElementById('modalTitle').textContent = data.title;
     document.getElementById('modalAuthor').textContent = data.author;
@@ -259,7 +259,7 @@ function openModal(data, type) {
 
     const fileName = data.file_path ? data.file_path.split('/').pop() : '';
     const folder = data.year_completed && data.year_completed !== "null" ? data.year_completed + "/" : "";
-    const pdfUrl = `/caps/Users/Public/StudentNavigations/uploads/${folder}${fileName}`; 
+    const pdfUrl = `/caps/Users/Public/StudentNavigations/uploads/${folder}${fileName}`;
     document.getElementById('modalFile').href = pdfUrl;
     document.getElementById('modalViewFile').onclick = e => {
         e.preventDefault();
@@ -270,21 +270,21 @@ function openModal(data, type) {
     actions.innerHTML = '';
 
     const role = (type === "review") ? "Panelist" : "Advicer";
-    
+
     let currentStatus;
     if (type === "advisory") {
         // Advicer status is in research_documents.prev_status
         currentStatus = data.prev_status;
-    } else { 
+    } else {
         // Panelist status is in research_reviewers.status (fetched as reviewer_status)
         currentStatus = data.reviewer_status;
     }
-    
+
     const status = (currentStatus || 'Pending').toLowerCase();
     const cancelButtonFinalized = `<button type="button" class="btn btn-secondary btn-sm" onclick="showCancelConfirmation(${data.id}, '${type}')">↩️ Cancel</button>`;
 
     if (["approvedbypanelist", "approvedbyadvicer"].includes(status) || status === "revisionrequired" || ["rejectedbypanelist", "rejectedbyadvicer"].includes(status)) {
-        
+
         // Finalized State: Display result and Revert button
         let messageHtml;
         let alertClass;
@@ -303,7 +303,7 @@ function openModal(data, type) {
             icon = "❌";
             messageHtml = `The research has been **Rejected** by the ${role}.`;
         }
-        
+
         actions.innerHTML = `
             <div class="alert alert-info d-flex align-items-center mb-3 p-2" role="alert">
                 <h6 class="mb-0 me-3">ℹ️</h6>
@@ -315,23 +315,23 @@ function openModal(data, type) {
             </div>
             ${cancelButtonFinalized}
         `;
-    } 
+    }
     else {
         // Pending State: Display action buttons
-        
+
         const uploadField = `
             <div class="mb-3">
                 <label for="modalFeedbackFile" class="form-label fw-bold">Upload Feedback File (Optional)</label>
                 <input class="form-control form-control-sm" type="file" id="modalFeedbackFile" name="feedback_file">
             </div>`;
-        
+
         const feedbackTextarea = `<textarea id="modalFeedback" class="form-control mb-2" rows="3" placeholder="Feedback / Comments...">${savedFeedback}</textarea>`;
 
         const decisionButtons = `
             <button class="btn btn-success btn-sm me-1" onclick="confirmAction(${data.id}, 'Approvedby${role}')">✅ Approve</button>
             <button class="btn btn-warning btn-sm me-1" onclick="confirmAction(${data.id}, 'RevisionRequired')">📝 Revision</button>
             <button class="btn btn-danger btn-sm me-1" onclick="confirmAction(${data.id}, 'Rejectedby${role}')">❌ Reject</button>`;
-        
+
         actions.innerHTML = `
             <div class="alert alert-info d-flex align-items-center mb-3 p-2" role="alert">
                 <h6 class="mb-0 me-3">✍️</h6>
@@ -379,12 +379,12 @@ function updateStatus(researchId, status) {
     if (fileInput && fileInput.files.length > 0) {
         formData.append("feedback_file", fileInput.files[0]);
     }
-    
+
     // Distinguish between Advicer (prev_status) and Panelist (status)
     const adviserActions = ['ApprovedbyAdvicer','RejectedbyAdvicer','RevisionRequired'];
     if (adviserActions.includes(status)) formData.append("prev_status", status);
-    else formData.append("status", status); 
-    
+    else formData.append("status", status);
+
     fetch("update_research_status.php", { method: "POST", body: formData })
         .then(res => res.text())
         .then(message => {
