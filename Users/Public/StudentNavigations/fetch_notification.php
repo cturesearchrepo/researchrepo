@@ -8,12 +8,12 @@ if (!isset($_SESSION['student_id'])) {
 
 $student_id = $_SESSION['student_id'];
 
-$conn = new mysqli("localhost", "root", "", "CentralizedResearchRepository_userdb");
+$conn = new mysqli("sql207.infinityfree.com", "if0_40577910", "CTURepo2025", "if0_40577910_repo_db");
 if ($conn->connect_error) die("Connection failed: " . $conn->connect_error);
 
-$sql = "SELECT id, message, type, status, is_read, created_at 
-        FROM notifications 
-        WHERE student_id = ? 
+$sql = "SELECT id, message, type, status, is_read, created_at
+        FROM notifications
+        WHERE student_id = ?
         ORDER BY created_at DESC";
 
 $stmt = $conn->prepare($sql);

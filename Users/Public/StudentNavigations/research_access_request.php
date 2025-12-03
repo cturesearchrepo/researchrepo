@@ -15,7 +15,7 @@ if ($research_id <= 0) {
     exit;
 }
 
-$conn = new mysqli("localhost", "root", "", "CentralizedResearchRepository_userdb");
+$conn = new mysqli("sql207.infinityfree.com", "if0_40577910", "CTURepo2025", "if0_40577910_repo_db");
 if ($conn->connect_error) {
     echo json_encode(["success" => false, "message" => "Database connection failed."]);
     exit;
@@ -40,7 +40,7 @@ if ($check->num_rows > 0) {
     }
 } else {
     $stmt = $conn->prepare("
-        INSERT INTO research_access_requests (research_id, student_id, status, requested_at) 
+        INSERT INTO research_access_requests (research_id, student_id, status, requested_at)
         VALUES (?, ?, 'Pending', NOW())
     ");
     $stmt->bind_param("ii", $research_id, $student_id);

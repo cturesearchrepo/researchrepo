@@ -1,6 +1,6 @@
 <?php
 session_start();
-$mysqli = new mysqli("sql207.infinityfree.com", "if0_40577910", "CTURepo2025", "if0_40577910_repo_db");
+$mysqli = new mysqli("localhost", "root", "", "CentralizedResearchRepository_userdb");
 
 if ($mysqli->connect_error) {
     die("Connection failed: " . $mysqli->connect_error);
