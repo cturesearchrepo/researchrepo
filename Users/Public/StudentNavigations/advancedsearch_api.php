@@ -8,7 +8,7 @@ if (!isset($_SESSION['student_id'])) {
     exit;
 }
 
-$conn = new mysqli('localhost', 'root', '', 'CentralizedResearchRepository_userdb');
+$conn = new mysqli("sql207.infinityfree.com", "if0_40577910", "CTURepo2025", "if0_40577910_repo_db");
 if ($conn->connect_error) {
     echo json_encode(['success' => false, 'message' => 'Database connection failed']);
     exit;
@@ -110,7 +110,7 @@ if (isset($_GET['ajax']) && $_GET['ajax'] === 'list') {
     $category = $_GET['category'] ?? 'all';
     $search = $_GET['search'] ?? '';
 
-    $sql = "SELECT r.id, r.title, r.author, r.abstract, r.faculty_id,  
+    $sql = "SELECT r.id, r.title, r.author, r.abstract, r.faculty_id,
                    c.name AS category_name, f.fullname AS adviser_name,
                    (SELECT id FROM favorites WHERE student_id = ? AND research_id = r.id) AS is_favorite,
                    (SELECT status FROM research_access_requests WHERE student_id = ? AND research_id = r.id) AS access_status,

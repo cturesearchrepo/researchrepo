@@ -5,7 +5,7 @@ if (!isset($_SESSION['student_id'])) {
 }
 
 // Load categories for filter
-$conn = new mysqli('localhost', 'root', '', 'CentralizedResearchRepository_userdb');
+$conn = new mysqli("sql207.infinityfree.com", "if0_40577910", "CTURepo2025", "if0_40577910_repo_db");
 if ($conn->connect_error) die("Connection failed: ".$conn->connect_error);
 
 $categories = [];
@@ -29,7 +29,7 @@ h3 { text-align:center; color:#264653; margin-bottom:20px; position: relative; t
 
 .research-list {display:grid; grid-template-columns:repeat(3, minmax(210px,1fr)); gap:40px; padding:30px; position: relative; top: 110px; left: 20px;}
 .research-card {
-    background: 
+    background:
         linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.1)),
         url('Photos/book.jpg');
     background-size: cover;
@@ -72,7 +72,7 @@ h3 { text-align:center; color:#264653; margin-bottom:20px; position: relative; t
 .modal {
     display: none;
     position: fixed;
-    top: 0; 
+    top: 0;
     left: 0;
     width: 100%;
     height: 100%;

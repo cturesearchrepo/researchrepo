@@ -18,17 +18,17 @@ if (isset($_SESSION['student_id'])) {
 }
 
 // Database connection
-$conn = new mysqli('localhost', 'root', '', 'CentralizedResearchRepository_userdb');
+$conn = new mysqli("sql207.infinityfree.com", "if0_40577910", "CTURepo2025", "if0_40577910_repo_db");
 if ($conn->connect_error) die("DB connection failed: " . $conn->connect_error);
 
 // Fetch student preferences
 $stmt = $conn->prepare("
     SELECT department, interests, theme, notifications, privacy
-    FROM student_preferences 
-    WHERE student_id = ? 
+    FROM student_preferences
+    WHERE student_id = ?
     LIMIT 1
 ");
-$stmt->bind_param('i', $user_id); 
+$stmt->bind_param('i', $user_id);
 $stmt->execute();
 $stmt->bind_result($department, $interests, $theme, $notifications_json, $privacy_json);
 $stmt->fetch();

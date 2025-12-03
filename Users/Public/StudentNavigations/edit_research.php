@@ -8,7 +8,7 @@ if (!isset($_SESSION['student_id'])) {
 }
 
 $student_id = (int)$_SESSION['student_id'];
-$conn = new mysqli('localhost', 'root', '', 'CentralizedResearchRepository_userdb');
+$conn = new mysqli("sql207.infinityfree.com", "if0_40577910", "CTURepo2025", "if0_40577910_repo_db");
 if ($conn->connect_error) {
     echo json_encode(['status' => 'error', 'message' => 'Database connection failed']);
     exit;
@@ -43,14 +43,14 @@ if (!empty($_FILES['file_path']['name'])) {
 }
 
 if ($filePath) {
-    $query = "UPDATE research_documents 
-              SET title=?, research_type=?, abstract=?, faculty_id=?, file_path=? 
+    $query = "UPDATE research_documents
+              SET title=?, research_type=?, abstract=?, faculty_id=?, file_path=?
               WHERE id=? AND uploaded_by_student=?";
     $stmt = $conn->prepare($query);
     $stmt->bind_param('sssisii', $title, $type, $abstract, $faculty_id, $filePath, $research_id, $student_id);
 } else {
-    $query = "UPDATE research_documents 
-              SET title=?, research_type=?, abstract=?, faculty_id=? 
+    $query = "UPDATE research_documents
+              SET title=?, research_type=?, abstract=?, faculty_id=?
               WHERE id=? AND uploaded_by_student=?";
     $stmt = $conn->prepare($query);
     $stmt->bind_param('sssiii', $title, $type, $abstract, $faculty_id, $research_id, $student_id);
