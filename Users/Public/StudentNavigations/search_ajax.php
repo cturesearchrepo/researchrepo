@@ -1,10 +1,5 @@
 <?php
-$servername = "localhost";
-$username   = "root";
-$password   = "";
-$dbname     = "CentralizedResearchRepository_userdb";
-
-$conn = new mysqli($servername, $username, $password, $dbname);
+$conn = new mysqli("sql207.infinityfree.com", "if0_40577910", "CTURepo2025", "if0_40577910_repo_db");
 if ($conn->connect_error) { die("Connection failed: " . $conn->connect_error); }
 
 $selectedCategory = $_GET['category'] ?? 'all';
@@ -12,7 +7,7 @@ $page = isset($_GET['p']) ? max(1, (int)$_GET['p']) : 1;
 $limit = 5;
 $offset = ($page - 1) * $limit;
 
-$countSql = "SELECT COUNT(*) AS total 
+$countSql = "SELECT COUNT(*) AS total
              FROM research_documents r
              LEFT JOIN categories c ON r.category_id = c.id
              WHERE r.status IN ('Active','ApprovedbyAdmin')";
@@ -87,10 +82,10 @@ echo '</tbody></table>';
 
 $totalPages = ceil($totalEntries / $limit);
 echo '<div class="pagination">';
-echo ($page > 1) ? "<button type='button' data-page='" . ($page - 1) . "'>Previous</button>" 
+echo ($page > 1) ? "<button type='button' data-page='" . ($page - 1) . "'>Previous</button>"
                   : "<button type='button' disabled>Previous</button>";
 echo "<button type='button' class='active'>$page</button>";
-echo ($page < $totalPages) ? "<button type='button' data-page='" . ($page + 1) . "'>Next</button>" 
+echo ($page < $totalPages) ? "<button type='button' data-page='" . ($page + 1) . "'>Next</button>"
                            : "<button type='button' disabled>Next</button>";
 echo '</div>';
 

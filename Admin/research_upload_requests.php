@@ -5,12 +5,7 @@ if (!isset($_SESSION['admin_id'])) {
     exit;
 }
 
-$DB_HOST = 'localhost';
-$DB_USER = 'root';
-$DB_PASS = '';
-$DB_NAME = 'CentralizedResearchRepository_userdb';
-
-$conn = new mysqli($DB_HOST, $DB_USER, $DB_PASS, $DB_NAME);
+$conn = new mysqli("sql207.infinityfree.com", "if0_40577910", "CTURepo2025", "if0_40577910_repo_db");
 if ($conn->connect_error) die("DB Connection failed: " . $conn->connect_error);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'], $_POST['id'])) {
@@ -66,7 +61,7 @@ $result = $conn->query("
     WHERE r.prev_status = 'ApprovedbyAdvicer'
       AND r.status != 'ApprovedbyAdmin'
       AND NOT EXISTS (
-          SELECT 1 
+          SELECT 1
           FROM research_reviewers rr
           WHERE rr.research_id = r.id
             AND rr.status != 'ApprovedbyPanelist'

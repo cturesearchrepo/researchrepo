@@ -3,18 +3,13 @@ if(!isset($_SESSION['student_id'])){
     header("Location: login.php");
     exit;
 }
-$servername = "localhost";
-$username   = "root";
-$password   = "";
-$dbname     = "CentralizedResearchRepository_userdb";
-
-$conn = new mysqli($servername, $username, $password, $dbname);
+$conn = new mysqli("sql207.infinityfree.com", "if0_40577910", "CTURepo2025", "if0_40577910_repo_db");
 if ($conn->connect_error) die("Connection failed: " . $conn->connect_error);
 
 $studentId = intval($_SESSION['student_id']);
 $sql = "
     SELECT rar.id, rar.status, rar.requested_at, rar.expire_at,
-           rar.admin_note, 
+           rar.admin_note,
            rd.title AS research_title, rd.author AS research_author,
            rd.keywords, rd.abstract, rd.adviser, rd.file_path
     FROM research_access_requests rar
@@ -140,7 +135,7 @@ table.dataTable tbody tr:hover { background: #fff0f0; transform: scale(1.01); tr
         </thead>
         <tbody>
             <?php foreach ($requests as $req):
-                $remaining = ($req['expire_at'] && $req['expire_at'] !== "0000-00-00 00:00:00") 
+                $remaining = ($req['expire_at'] && $req['expire_at'] !== "0000-00-00 00:00:00")
                     ? (strtotime($req['expire_at']) - time()) / 86400 : null;
             ?>
             <tr>
@@ -259,7 +254,7 @@ function updateCountdowns(){
             const row = span.closest("tr");
             const badge = row.querySelector(".badge");
             badge.textContent = "Expired";
-            badge.className = "badge expired"; 
+            badge.className = "badge expired";
 
             const id = row.querySelector('.extend-btn, .cancel-btn, .request-again-btn')?.dataset.id;
             row.querySelector("td:last-child").innerHTML = `
@@ -289,7 +284,7 @@ $(document).on("click", ".extend-btn", function(){
                 if(res.success){
                     let badge = row.find(".badge");
                     badge.text("Extend Requested").removeClass().addClass("badge pending");
-                    row.find("td:last").html(""); 
+                    row.find("td:last").html("");
                 }
             } catch(e){ console.error("Invalid JSON:", resp); }
         });});});

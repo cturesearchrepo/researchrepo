@@ -1,12 +1,7 @@
 <?php
 session_start();
 
-$servername = "localhost";
-$username   = "root";
-$password   = "";
-$dbname     = "CentralizedResearchRepository_userdb";
-
-$conn = new mysqli($servername, $username, $password, $dbname);
+$conn = new mysqli("sql207.infinityfree.com", "if0_40577910", "CTURepo2025", "if0_40577910_repo_db");
 if ($conn->connect_error) die("Database connection failed");
 
 $studentId = intval($_SESSION['student_id'] ?? 0);
@@ -32,8 +27,8 @@ $conn->close();
 if ($data['status'] !== 'approved') die("Request not approved");
 if ($data['expire_at'] && strtotime($data['expire_at']) < time()) die("Access expired");
 
-$userPath  = __DIR__ . '/' . $data['file_path'];              
-$adminPath = __DIR__ . '/../../../Admin/' . $data['file_path'];    
+$userPath  = __DIR__ . '/' . $data['file_path'];
+$adminPath = __DIR__ . '/../../../Admin/' . $data['file_path'];
 if (file_exists($userPath)) {
     $filePath = $userPath;
 } elseif (file_exists($adminPath)) {

@@ -8,10 +8,10 @@ if (session_status() === PHP_SESSION_NONE) {
 require __DIR__ . '/../../../vendor/autoload.php';
 use Smalot\PdfParser\Parser;
 
-$DB_HOST = 'localhost';
-$DB_USER = 'root';
-$DB_PASS = '';
-$DB_NAME = 'CentralizedResearchRepository_userdb';
+$DB_HOST = 'sql207.infinityfree.com';
+$DB_USER = 'if0_40577910';
+$DB_PASS = 'CTURepo2025';
+$DB_NAME = 'if0_40577910_repo_db';
 
 function cleanInput(?string $data): string {
     return htmlspecialchars(trim((string)$data ?? ''), ENT_QUOTES, 'UTF-8');
@@ -132,12 +132,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_FILES["research_file"])) {
 
     $conn->begin_transaction();
     try {
-        $stmt = $conn->prepare("INSERT INTO research_documents 
+        $stmt = $conn->prepare("INSERT INTO research_documents
         (title, author, category_id, keywords, abstract, faculty_id,
-         course, department, section, research_type, research_design, 
-         file_path, uploaded_at, year_completed, submitted_date, uploaded_by_student, status) 
+         course, department, section, research_type, research_design,
+         file_path, uploaded_at, year_completed, submitted_date, uploaded_by_student, status)
          VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
-         
+
         $stmt->bind_param("ssississsssssiiis",
             $title, $author, $category_id, $keywords, $abstract, $faculty_id,
             $course, $department, $section, $research_type, $research_design,
@@ -303,7 +303,7 @@ button[type="submit"]:hover {
         <form id="researchUploadForm" action="upload-research.php" method="POST" enctype="multipart/form-data" novalidate>
             <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?>"/>
             <div class="form-grid">
-                
+
         <div class="form-group">
             <label>Research Title</label>
             <div class="input-icon">
@@ -349,7 +349,7 @@ button[type="submit"]:hover {
             <div class="input-icon">
                 <i class="fa-solid fa-calendar"></i>
                 <select id="year" name="year" required>
-                    <?php 
+                    <?php
                         $current = date("Y");
                        for ($y = $current; $y >= 2023; $y--) {
                             echo "<option value='$y'>$y</option>";
@@ -402,17 +402,17 @@ button[type="submit"]:hover {
             <label>Program</label>
             <div class="input-icon">
                 <i class="fa-solid fa-graduation-cap"></i>
-                <select name="program" required> 
-                    <option value="">Select Course</option> 
-                    <option value="BTLED">BTLED</option> 
-                    <option value="BSED Math">BSED Math</option> 
-                    <option value="BSIE">BSIE</option> 
-                    <option value="BIT Computer Tech">BIT Computer Tech</option> 
-                    <option value="BIT Electronics">BIT Electronics</option> 
-                    <option value="BSFI">BSFI</option> 
-                    <option value="BSIT">BSIT</option> 
-                    <option value="BEED">BEED</option> 
-                    <option value="BSHM">BSHM</option> 
+                <select name="program" required>
+                    <option value="">Select Course</option>
+                    <option value="BTLED">BTLED</option>
+                    <option value="BSED Math">BSED Math</option>
+                    <option value="BSIE">BSIE</option>
+                    <option value="BIT Computer Tech">BIT Computer Tech</option>
+                    <option value="BIT Electronics">BIT Electronics</option>
+                    <option value="BSFI">BSFI</option>
+                    <option value="BSIT">BSIT</option>
+                    <option value="BEED">BEED</option>
+                    <option value="BSHM">BSHM</option>
                 </select>
             </div>
         </div>
@@ -450,7 +450,7 @@ button[type="submit"]:hover {
         <div class="form-group">
             <label>Research Design</label>
             <div class="input-icon">
-                <i class="fa-solid fa-eye"></i> 
+                <i class="fa-solid fa-eye"></i>
                 <select name="research_design" required>
                     <option value="">Select Research Design</option>
                     <option value="Experimental">Experimental</option>
@@ -592,10 +592,10 @@ formData.set("year", yearValue);
     <p><b>File:</b> ${formData.get("research_file").name}</p>
     <p><b>Abstract:</b></p>
     <div style="
-        background-color: #f0f8ff; 
-        padding: 10px; 
-        border-left: 4px solid #007bff; 
-        border-radius: 5px; 
+        background-color: #f0f8ff;
+        padding: 10px;
+        border-left: 4px solid #007bff;
+        border-radius: 5px;
         white-space: pre-wrap;
         max-height: 100px;
         overflow-y: auto;
@@ -627,7 +627,7 @@ document.getElementById('proceedBtn').onclick = () => {
         successMsg.innerText = `✅ ${data.type} document uploaded. Your submission will be reviewed by panelist, adviser, and finally the admin.`;
         successModal.style.display = "flex";
         form.reset();
-        abstractField.value = ""; 
+        abstractField.value = "";
       } else {
         alert(data.message || "❌ Upload failed.");
       }

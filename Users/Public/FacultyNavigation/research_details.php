@@ -3,14 +3,9 @@ session_start();
 $facultyId = intval($_SESSION['faculty_id'] ?? 0);
 if (!$facultyId) die("Unauthorized access");
 
-$servername = "localhost";
-$username   = "root";
-$password   = "";
-$dbname     = "CentralizedResearchRepository_userdb";
-
-$conn = new mysqli($servername, $username, $password, $dbname);
-if ($conn->connect_error) { 
-    die("Connection failed: " . $conn->connect_error); 
+$conn = new mysqli("sql207.infinityfree.com", "if0_40577910", "CTURepo2025", "if0_40577910_repo_db");
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
 }
 
 $researchId = intval($_GET['id'] ?? 0);
@@ -32,7 +27,7 @@ $stmt->close();
 
 $panelists = [];
 $panelSql = "
-    SELECT f.fullname 
+    SELECT f.fullname
     FROM research_reviewers rr
     LEFT JOIN faculty f ON rr.reviewer_id = f.id
     WHERE rr.research_id = ?
@@ -125,7 +120,7 @@ h2 { margin-bottom:20px; color:#2c3e50; font-size:28px; }
     transition: background-color 0.2s, transform 0.2s;
 }
 .back-btn:hover {
-    background-color: #a50000; 
+    background-color: #a50000;
     transform: translateX(-2px);
 }
 .back-btn svg { width: 22px; height: 22px; transition: transform 0.2s; }
@@ -146,7 +141,7 @@ h2 { margin-bottom:20px; color:#2c3e50; font-size:28px; }
   </h2>
 
   <div class="row">
-    <div class="col-left">   
+    <div class="col-left">
       <div class="abstract-box">
         <h3>Abstract</h3>
         <p><?= nl2br(htmlspecialchars($research['abstract'])) ?></p>
@@ -167,7 +162,7 @@ h2 { margin-bottom:20px; color:#2c3e50; font-size:28px; }
         <div class="info-item"><strong>Views:</strong> <?= htmlspecialchars($viewCount) ?></div>
         <div class="info-item"><strong>Keywords:</strong> <?= htmlspecialchars($research['keywords']) ?></div>
         <div class="info-item">
-          <strong>Rating:</strong> 
+          <strong>Rating:</strong>
           <span class="star-rating">
               <?php for ($i=1; $i<=5; $i++): ?>
                 <span class="star <?= ($i <= round($rating))?'filled':'' ?>"><?= ($i <= round($rating))?'★':'☆' ?></span>

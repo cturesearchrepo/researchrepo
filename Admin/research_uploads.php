@@ -2,18 +2,13 @@
 // fetch_research.php
 header("Content-Type: application/json");
 
-$servername = "localhost";
-$username   = "root";
-$password   = "";
-$dbname     = "CentralizedResearchRepository_userdb";
-
-$conn = new mysqli($servername, $username, $password, $dbname);
+$conn = new mysqli("sql207.infinityfree.com", "if0_40577910", "CTURepo2025", "if0_40577910_repo_db");
 if ($conn->connect_error) {
     echo json_encode(["ok" => false, "message" => "DB connection failed"]);
     exit();
 }
 
-$sql = "SELECT id, title, author, year_completed, adviser, course, department, section, research_type, approval_status, visibility, file_path, abstract 
+$sql = "SELECT id, title, author, year_completed, adviser, course, department, section, research_type, approval_status, visibility, file_path, abstract
         FROM research_documents
         ORDER BY uploaded_at DESC";
 

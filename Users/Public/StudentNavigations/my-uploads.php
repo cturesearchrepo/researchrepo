@@ -8,12 +8,7 @@ if (!isset($_SESSION['student_id'])) {
 
 $student_id = (int)$_SESSION['student_id'];
 
-$DB_HOST = 'localhost';
-$DB_USER = 'root';
-$DB_PASS = '';
-$DB_NAME = 'CentralizedResearchRepository_userdb';
-
-$conn = new mysqli($DB_HOST, $DB_USER, $DB_PASS, $DB_NAME);
+$conn = new mysqli("sql207.infinityfree.com", "if0_40577910", "CTURepo2025", "if0_40577910_repo_db");
 if ($conn->connect_error) die("DB Connection failed: " . $conn->connect_error);
 
 // Fetch faculty list for the Edit Modal dropdowns
@@ -21,14 +16,14 @@ $facultyList = $conn->query("SELECT id, fullname FROM faculty ORDER BY fullname 
 
 // Prepare and execute the main research documents query
 $stmt = $conn->prepare("
-    SELECT 
+    SELECT
         rs.id, rs.title, rs.author, rs.year_completed, rs.research_type,
         rs.status, rs.prev_status, rs.file_path, rs.transmittal_file, rs.uploaded_at, rs.abstract,
-        rs.faculty_id AS adviser_id, 
+        rs.faculty_id AS adviser_id,
         f.fullname AS adviser,
         GROUP_CONCAT(
             CONCAT(
-                rev.id, '||', 
+                rev.id, '||',
                 rev.fullname, '||',
                 IFNULL(rf.status, rev.status), '||',
                 IFNULL(rf.feedback,''), '||',
@@ -67,18 +62,18 @@ while ($row = $result->fetch_assoc()) {
         $revList = explode('%%', $row['reviewers_data']);
         foreach ($revList as $rev) {
             $parts = explode('||', $rev);
-            $feedbackFilePath = $parts[4] ?? ''; 
+            $feedbackFilePath = $parts[4] ?? '';
            $feedbackFileUrl = !empty($feedbackFilePath)
     ? 'http://localhost/caps/Users/Public/FacultyNavigation/' . trim($feedbackFilePath, '/')
     : '';
 
-            
+
             $row['reviewers'][] = [
                 'id'       => $parts[0] ?? '', // Reviewer ID (faculty ID)
                 'fullname' => $parts[1] ?? '',
                 'status'   => $parts[2] ?? '',
                 'feedback' => $parts[3] ?? '',
-                'file'     => $feedbackFileUrl, 
+                'file'     => $feedbackFileUrl,
                 'role'     => $parts[5] ?? 'Panelist'
             ];
         }
@@ -122,16 +117,16 @@ function truncateText($text, $max = 100) {
 <style>
 
 .step-feedback-details {
-    margin-top: 8px; 
-    border-top: 1px solid #eee; 
-    padding-top: 5px; 
+    margin-top: 8px;
+    border-top: 1px solid #eee;
+    padding-top: 5px;
     text-align: left;
 }
 
 .step-feedback-details a {
-    font-size: 0.8rem; 
-    color: #007bff; 
-    font-weight: bold; 
+    font-size: 0.8rem;
+    color: #007bff;
+    font-weight: bold;
     text-decoration: none;
     display: block;
     margin-top: 3px;
@@ -143,9 +138,9 @@ table {width:100%;border-collapse:collapse;margin-top:20px;table-layout:fixed;wo
 th, td {border:1px solid #ddd;padding:10px 12px;text-align:left;vertical-align:top;transition:all 0.2s ease;}
 th {background-color:#f1f3f6;font-weight:600;color:#444;}
 tr:nth-child(even){background-color:#fafafa;} tr:hover{background-color:#f0f7ff;}
-.status-Pending{color:orange;font-weight:bold;} 
-.status-Approved{color:green;font-weight:bold;} 
-.status-Archive{color:#007bff;font-weight:bold;} 
+.status-Pending{color:orange;font-weight:bold;}
+.status-Approved{color:green;font-weight:bold;}
+.status-Archive{color:#007bff;font-weight:bold;}
 .status-Rejected{color:red;font-weight:bold;}
 .action-buttons {display:flex;gap:6px;justify-content:center;align-items:center;}
 .action-buttons a {display:inline-flex;align-items:center;justify-content:center;padding:10px;border-radius:6px;text-decoration:none;font-size:0.9rem;font-weight:500;color:#fff;box-shadow:0 2px 5px rgba(0,0,0,0.1);transition:0.2s ease;}
@@ -208,7 +203,7 @@ tr:nth-child(even){background-color:#fafafa;} tr:hover{background-color:#f0f7ff;
     border: 1px solid #ccc;
     border-radius: 6px;
     font-size: 0.95rem;
-    
+
     box-sizing: border-box;
     transition: all 0.2s ease-in-out;
     height: 34px; /* shorter input height */
@@ -479,9 +474,9 @@ tr:nth-child(even){background-color:#fafafa;} tr:hover{background-color:#f0f7ff;
 </thead>
 <tbody>
 <?php foreach($uploads as $u): ?>
-<tr 
-    data-id="<?= htmlspecialchars($u['id'], ENT_QUOTES) ?>" 
-    data-abstract="<?= htmlspecialchars($u['abstract'], ENT_QUOTES) ?>" 
+<tr
+    data-id="<?= htmlspecialchars($u['id'], ENT_QUOTES) ?>"
+    data-abstract="<?= htmlspecialchars($u['abstract'], ENT_QUOTES) ?>"
     data-reviewers='<?= htmlspecialchars(json_encode($u['reviewers'], JSON_HEX_APOS|JSON_HEX_QUOT), ENT_QUOTES) ?>'
     data-status="<?= htmlspecialchars(strtolower($u['status']), ENT_QUOTES) ?>"
     data-prev-status="<?= htmlspecialchars(strtolower($u['prev_status'] ?? ''), ENT_QUOTES) ?>"
@@ -498,7 +493,7 @@ tr:nth-child(even){background-color:#fafafa;} tr:hover{background-color:#f0f7ff;
 <td class="<?= statusClass($u['prev_status']) ?>"><?= htmlspecialchars($u['status'], ENT_QUOTES) ?></td>
 <td><?= date("M d, Y", strtotime($u['uploaded_at'])) ?></td>
 <td class="action-buttons">
-<?php 
+<?php
 $statusLower = strtolower($u['status'] ?? '');
 if(!empty($u['file_path'])) {
     echo '<a href="#" class="view-btn"><i class="fa-solid fa-eye"></i></a> ';
@@ -630,7 +625,7 @@ document.addEventListener('DOMContentLoaded', function() {
             e.preventDefault();
             const row = this.closest('tr');
             let reviewers = [];
-            try { reviewers = JSON.parse(row.dataset.reviewers || '[]'); } 
+            try { reviewers = JSON.parse(row.dataset.reviewers || '[]'); }
             catch { reviewers = []; }
 
             const panelists = reviewers.filter(r => r.role.toLowerCase() === 'panelist');
@@ -642,7 +637,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 list.forEach((rev, idx) => {
                     const stepDiv = document.createElement('div');
                     stepDiv.classList.add('step');
-                    
+
                     const st = rev.status?.toLowerCase() || 'pending';
                     if(st.includes('approved')) stepDiv.classList.add('active');
                     else if(st.includes('reject')) stepDiv.classList.add('rejected');
@@ -678,16 +673,16 @@ document.addEventListener('DOMContentLoaded', function() {
 
             createStepHTML(panelists, document.querySelector('#step1 .steps-body'));
             createStepHTML(adviserChair, document.querySelector('#step2 .steps-body'));
-            
+
             const adminStatusLower = row.dataset.status?.toLowerCase() || '';
             const adminReviewer = [
-                { 
-                    fullname: 'Administrator', 
-                    role: 'Admin', 
-                    status: row.dataset.status, 
-                    id: 0, 
-                    feedback: adminStatusLower.includes('rejectedbyadmin') ? 'Rejected by system administrator.' : '', 
-                    file: '' 
+                {
+                    fullname: 'Administrator',
+                    role: 'Admin',
+                    status: row.dataset.status,
+                    id: 0,
+                    feedback: adminStatusLower.includes('rejectedbyadmin') ? 'Rejected by system administrator.' : '',
+                    file: ''
                 }
             ];
             createStepHTML(adminReviewer, document.querySelector('#step4 .steps-body'));
@@ -705,7 +700,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 stepSections.forEach((s,i) => s.style.display = (i+1 === currentStep ? 'block' : 'none'));
                 prevBtn.style.display = currentStep > 1 ? 'inline-block' : 'none';
                 nextBtn.textContent = currentStep === totalSteps ? 'Done' : 'Next ➡';
-                
+
                 nextBtn.disabled = false;
                 nextBtn.classList.remove('active');
 
@@ -719,16 +714,16 @@ document.addEventListener('DOMContentLoaded', function() {
                 else if(currentStep === 2) {
                     const prevStatus = row.dataset.prevStatus.toLowerCase() || '';
                     const adviserSteps = document.querySelectorAll('#step2 .step');
-                    
+
                     if(adviserSteps.length > 0) {
                         const adviserStep = adviserSteps[0];
                         adviserStep.classList.remove('active', 'revision', 'rejected');
-                        
+
                         if(prevStatus.includes('approved')) {
                             modalMessage.textContent = '';
                             nextBtn.disabled = false;
                             nextBtn.classList.add('active');
-                            adviserStep.classList.add('active'); 
+                            adviserStep.classList.add('active');
                         } else if(prevStatus.includes('revision')) {
                             modalMessage.textContent = '⚠ Adviser requested revision.';
                             nextBtn.disabled = true;
@@ -746,7 +741,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         }
                     } else {
                         modalMessage.textContent = 'ℹ️ No adviser assigned.';
-                        nextBtn.disabled = false; 
+                        nextBtn.disabled = false;
                     }
                 }
                 else if(currentStep === 3) {
@@ -769,8 +764,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     nextBtn.disabled = currentFilePath.length === 0;
                     nextBtn.classList.toggle('active', currentFilePath.length > 0);
 
-                    modalMessage.textContent = currentFilePath.length > 0 
-                        ? '✅ Transmittal already uploaded.' 
+                    modalMessage.textContent = currentFilePath.length > 0
+                        ? '✅ Transmittal already uploaded.'
                         : '⚠ Please upload transmittal to proceed.';
 
                     transmittalForm.onsubmit = function(e) {
@@ -780,11 +775,11 @@ document.addEventListener('DOMContentLoaded', function() {
                         .then(res => res.json())
                         .then(data => {
                             if(data.status === 'success') {
-                                row.dataset.transmittal = data.file_path; 
-                                
+                                row.dataset.transmittal = data.file_path;
+
                                 const viewUrl = `/caps/web/viewer.html?file=${encodeURIComponent(data.file_path)}`;
                                 currentFileEl.innerHTML = `Current File: <a href="${viewUrl}" target="_blank">View / Download</a>`;
-                                
+
                                 transmittalForm.querySelector('button[type="submit"]').textContent = 'Replace Transmittal';
                                 modalMessage.textContent = '✅ Transmittal uploaded successfully.';
                                 nextBtn.disabled = false;
@@ -800,7 +795,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 else if(currentStep === 4){
                     const adminStepDiv = document.querySelector('#step4 .step');
-                    const adminStatus = row.dataset.status?.toLowerCase() || ''; 
+                    const adminStatus = row.dataset.status?.toLowerCase() || '';
 
                     adminStepDiv.classList.remove('active','revision','rejected');
                     nextBtn.disabled = true;
@@ -839,7 +834,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const editModal = document.getElementById('editModal');
     const closeEditBtn = editModal.querySelector('.close-modal');
-    
+
     closeEditBtn.onclick = () => editModal.style.display = 'none';
     window.onclick = e => { if (e.target === editModal) editModal.style.display = 'none'; };
 
@@ -852,13 +847,13 @@ document.addEventListener('DOMContentLoaded', function() {
             const type = row.children[3].textContent.trim();
             const abstract = row.dataset.abstract;
             let reviewers = [];
-            try { reviewers = JSON.parse(row.dataset.reviewers || '[]'); } 
+            try { reviewers = JSON.parse(row.dataset.reviewers || '[]'); }
             catch { reviewers = []; }
 
             const currentPanelistIds = reviewers
                 .filter(r => r.role.toLowerCase() === 'panelist')
                 .map(r => r.id.toString());
-            
+
             const adviserId = row.dataset.adviserId;
 
 
@@ -866,7 +861,7 @@ document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('editTitle').value = title;
             document.getElementById('editType').value = type;
             document.getElementById('editAbstract').value = abstract;
-            
+
             document.getElementById('editAdviser').value = adviserId || '';
 
 
@@ -874,7 +869,7 @@ document.addEventListener('DOMContentLoaded', function() {
             Array.from(panelistsSelect.options).forEach(opt => {
                 opt.selected = currentPanelistIds.includes(opt.value);
             });
-            
+
             editModal.style.display = 'flex';
         });
     });
@@ -883,7 +878,7 @@ document.addEventListener('DOMContentLoaded', function() {
         e.preventDefault();
         const form = e.target;
         const formData = new FormData(form);
-        
+
         fetch('save_research.php', { method: 'POST', body: formData })
         .then(res => res.json())
         .then(data => {

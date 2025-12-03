@@ -1,10 +1,5 @@
 <?php
-$servername = "localhost";
-$username   = "root";
-$password   = "";
-$dbname     = "CentralizedResearchRepository_userdb";
-
-$conn = new mysqli($servername, $username, $password, $dbname);
+$conn = new mysqli("sql207.infinityfree.com", "if0_40577910", "CTURepo2025", "if0_40577910_repo_db");
 if ($conn->connect_error) die("Connection failed: " . $conn->connect_error);
 
 $mostViewed = [];
@@ -96,7 +91,7 @@ $conn->close();
       <div class="text-sm font-semibold" id="currentDate">Loading date...</div>
       <div class="text-xs font-light" id="currentTime">Loading time...</div>
     </div>
-  
+
   </section>
 
   <section>
@@ -150,24 +145,24 @@ const resultsDiv=document.getElementById('searchResults');
 function updateDateTimePH() {
   const now = new Date();
 
-  const dateOptions = { 
-    year: 'numeric', 
-    month: 'long', 
-    day: 'numeric', 
-    timeZone: 'Asia/Manila' 
+  const dateOptions = {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    timeZone: 'Asia/Manila'
   };
-  const timeOptions = { 
-    hour: 'numeric', 
-    minute: 'numeric', 
-    second: 'numeric', 
-    hour12: true, 
-    timeZone: 'Asia/Manila' 
+  const timeOptions = {
+    hour: 'numeric',
+    minute: 'numeric',
+    second: 'numeric',
+    hour12: true,
+    timeZone: 'Asia/Manila'
   };
 
-  document.getElementById('currentDate').textContent = 
+  document.getElementById('currentDate').textContent =
     now.toLocaleDateString('en-PH', dateOptions);
 
-  document.getElementById('currentTime').textContent = 
+  document.getElementById('currentTime').textContent =
     now.toLocaleTimeString('en-PH', timeOptions);
 }
 

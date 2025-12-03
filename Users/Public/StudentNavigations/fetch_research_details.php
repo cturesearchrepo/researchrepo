@@ -1,11 +1,6 @@
 <?php
 session_start();
-$servername = "localhost";
-$username   = "root";
-$password   = "";
-$dbname     = "CentralizedResearchRepository_userdb";
-
-$conn = new mysqli($servername, $username, $password, $dbname);
+$conn = new mysqli("sql207.infinityfree.com", "if0_40577910", "CTURepo2025", "if0_40577910_repo_db");
 if ($conn->connect_error) { die(json_encode(["error"=>"DB connection failed"])); }
 
 $researchId = intval($_GET['id'] ?? 0);

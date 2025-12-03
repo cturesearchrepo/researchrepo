@@ -9,12 +9,7 @@ if(!isset($_SESSION['student_id'])){
 
 $student_id = $_SESSION['student_id'];
 
-$DB_HOST = 'localhost';
-$DB_USER = 'root';
-$DB_PASS = '';
-$DB_NAME = 'CentralizedResearchRepository_userdb';
-
-$conn = new mysqli($DB_HOST,$DB_USER,$DB_PASS,$DB_NAME);
+$conn = new mysqli("sql207.infinityfree.com", "if0_40577910", "CTURepo2025", "if0_40577910_repo_db");
 if($conn->connect_error){
     echo json_encode(['status'=>'error','message'=>'DB connection failed']);
     exit;

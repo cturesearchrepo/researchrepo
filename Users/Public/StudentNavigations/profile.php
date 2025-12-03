@@ -10,12 +10,7 @@ if(!isset($_SESSION['student_id'])){
 
 $student_id = $_SESSION['student_id'];
 
-$DB_HOST = 'localhost';
-$DB_USER = 'root';
-$DB_PASS = '';
-$DB_NAME = 'CentralizedResearchRepository_userdb';
-
-$conn = new mysqli($DB_HOST,$DB_USER,$DB_PASS,$DB_NAME);
+$conn = new mysqli("sql207.infinityfree.com", "if0_40577910", "CTURepo2025", "if0_40577910_repo_db");
 if($conn->connect_error) die("DB Connection failed: ".$conn->connect_error);
 
 $stmt = $conn->prepare("SELECT * FROM students WHERE student_id=?");
@@ -31,10 +26,10 @@ $stmt->close();
 <meta charset="UTF-8">
 <title>Student Profile & Settings</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
-<style>   
+<style>
 .container{
-  padding: 25px; 
-  max-width: 1100px; 
+  padding: 25px;
+  max-width: 1100px;
   margin: auto;
   font-family: "Segoe UI", sans-serif;
 }
@@ -107,22 +102,22 @@ button:hover{
   <div class="settings-card">
     <form id="profileForm" enctype="multipart/form-data">
         <div style="text-align:center; margin-bottom:15px;">
-            <img src="../uploads/students/<?= !empty($student['profile_image']) ? htmlspecialchars($student['profile_image']) : 'default.png' ?>" 
+            <img src="../uploads/students/<?= !empty($student['profile_image']) ? htmlspecialchars($student['profile_image']) : 'default.png' ?>"
                  class="profile-img" alt="Profile">
         </div>
-        
+
         <label>Full Name</label>
         <input type="text" name="fullname" value="<?= htmlspecialchars($student['fullname']) ?>" required>
-        
+
         <label>Username</label>
         <input type="text" name="username" value="<?= htmlspecialchars($student['username']) ?>" required>
-        
+
         <label>Email</label>
         <input type="email" name="email" value="<?= htmlspecialchars($student['email']) ?>" required>
-        
+
         <label>Phone</label>
         <input type="text" name="phone" value="<?= htmlspecialchars($student['phone']) ?>">
-        
+
         <label>Year Level</label>
         <select name="year_level">
             <?php

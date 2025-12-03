@@ -1,12 +1,7 @@
 <?php
 session_start();
 
-$servername = "localhost";
-$username   = "root";
-$password   = "";
-$dbname     = "CentralizedResearchRepository_userdb";
-
-$conn = new mysqli($servername, $username, $password, $dbname);
+$conn = new mysqli("sql207.infinityfree.com", "if0_40577910", "CTURepo2025", "if0_40577910_repo_db");
 if ($conn->connect_error) die("Database connection failed.");
 
 if (isset($_GET['file'])) {
@@ -276,7 +271,7 @@ function showToast(msg){
 document.addEventListener("contextmenu", e => e.preventDefault());
 ["copy","cut","paste"].forEach(evt => document.addEventListener(evt, e => e.preventDefault()));
 document.addEventListener("keydown", e => {
-  if ((e.ctrlKey && ["u","s","c","x","v"].includes(e.key.toLowerCase())) || 
+  if ((e.ctrlKey && ["u","s","c","x","v"].includes(e.key.toLowerCase())) ||
       (e.ctrlKey && e.shiftKey && ["i","j"].includes(e.key.toLowerCase())) ||
       e.key === "F12") {
       e.preventDefault();

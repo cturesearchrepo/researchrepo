@@ -2,12 +2,7 @@
 session_start();
 header('Content-Type: application/json');
 
-$servername = "localhost";
-$username   = "root";
-$password   = "";
-$dbname     = "CentralizedResearchRepository_userdb";
-
-$conn = new mysqli($servername, $username, $password, $dbname);
+$conn = new mysqli("sql207.infinityfree.com", "if0_40577910", "CTURepo2025", "if0_40577910_repo_db");
 if ($conn->connect_error) {
     echo json_encode(["ok"=>false,"message"=>"DB connection failed"]);
     exit;

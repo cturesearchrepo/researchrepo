@@ -13,12 +13,7 @@ if (!isset($_POST['id']) || empty($_POST['id'])) {
 
 $request_id = (int)$_POST['id'];
 
-$servername = "localhost";
-$username   = "root";
-$password   = "";
-$dbname     = "CentralizedResearchRepository_userdb";
-
-$conn = new mysqli($servername, $username, $password, $dbname);
+$conn = new mysqli("sql207.infinityfree.com", "if0_40577910", "CTURepo2025", "if0_40577910_repo_db");
 if ($conn->connect_error) {
     echo json_encode(['status' => 'error', 'message' => 'Database connection failed.']);
     exit;

@@ -3,12 +3,7 @@ header('Content-Type: application/json');
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-$servername = "localhost";
-$username   = "root";
-$password   = "";
-$dbname     = "CentralizedResearchRepository_userdb";
-
-$conn = new mysqli($servername, $username, $password, $dbname);
+$conn = new mysqli("sql207.infinityfree.com", "if0_40577910", "CTURepo2025", "if0_40577910_repo_db");
 if ($conn->connect_error) {
     echo json_encode(["error" => "Connection failed: " . $conn->connect_error]);
     exit;
@@ -24,8 +19,8 @@ if ($q !== '') {
         LEFT JOIN categories c ON r.category_id = c.id
         WHERE r.status IN ('Active','ApprovedbyAdmin')
           AND (
-                r.title LIKE ? 
-                OR r.author LIKE ? 
+                r.title LIKE ?
+                OR r.author LIKE ?
                 OR c.name LIKE ?
                 OR r.keywords LIKE ?
               )
