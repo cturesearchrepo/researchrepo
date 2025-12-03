@@ -3,7 +3,7 @@ $servername = "localhost";
 $username   = "root";
 $password   = "";
 $dbname     = "CentralizedResearchRepository_userdb";
-$conn = new mysqli($servername, $username, $password, $dbname);
+$conn = new mysqli("sql207.infinityfree.com", "if0_40577910", "CTURepo2025", "if0_40577910_repo_db");
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);}
 $sql = "
@@ -19,7 +19,7 @@ $sql = "
 ";
 $result = $conn->query($sql);
 $requests = [];
-$now = new DateTime(); 
+$now = new DateTime();
 while ($row = $result->fetch_assoc()) {
     $expire = new DateTime($row['expire_at']);
     $diff_seconds = $expire->getTimestamp() - $now->getTimestamp();
@@ -42,8 +42,8 @@ body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; background: 
 h2 { color:#8B0000; margin-bottom:20px; font-weight:600; }
 
 .action-buttons { display: flex; gap: 6px; }
-.btn { 
-    padding:6px 10px; border:none; border-radius:4px; cursor:pointer; 
+.btn {
+    padding:6px 10px; border:none; border-radius:4px; cursor:pointer;
     font-size:1rem; display:inline-flex; align-items:center; justify-content:center; transition: all 0.2s ease;
 }
 .btn-view { background:#007bff; color:white; }
@@ -60,31 +60,31 @@ h2 { color:#8B0000; margin-bottom:20px; font-weight:600; }
 .badge.approved { background:#e6f7ed; color:#087f23; }
 .badge.declined { background:#fdeaea; color:#cc0000; }
 table.dataTable {
-    table-layout: fixed;   
-    word-wrap: break-word; 
+    table-layout: fixed;
+    word-wrap: break-word;
     width: 90%;
 }
 
-table.dataTable td, 
+table.dataTable td,
 table.dataTable th {
-    white-space: normal;  
-    word-break: break-word; 
-    max-width: 200px; 
+    white-space: normal;
+    word-break: break-word;
+    max-width: 200px;
     overflow-wrap: anywhere;}
-.modal { 
-    display:none; 
-    position:fixed; 
-    top:0; 
-    left:0; 
-    width:100%; 
-    height:100%; 
-    background:rgba(0,0,0,0.5); 
+.modal {
+    display:none;
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.5);
     z-index:1000;
 }
-.modal.show { 
-    display: flex; 
-    align-items: center; 
-    justify-content: center; 
+.modal.show {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 .modal-content { background:white; padding:25px; border-radius:8px; width:550px; max-width:95%; box-shadow:0 4px 20px rgba(0,0,0,0.3); position:relative; }
 .modal-header { font-size:1.4rem; font-weight:bold; margin-bottom:15px; color:#8B0000; }
@@ -164,9 +164,9 @@ table.dataTable th {
                 <td><span class="badge <?= $req['status'] ?>"><?= ucfirst($req['status']) ?></span></td>
                 <td>
                    <div class="action-buttons">
-                        <button class="btn btn-view" 
-        data-id="<?= $req['id'] ?>" 
-        data-author="<?= htmlspecialchars($req['research_author']) ?>" 
+                        <button class="btn btn-view"
+        data-id="<?= $req['id'] ?>"
+        data-author="<?= htmlspecialchars($req['research_author']) ?>"
         title="View">🔍</button>
                         <?php if ($req['status'] === 'pending' || $req['status'] === 'extendRequested') : ?>
                             <button class="btn btn-approve" data-id="<?= $req['id'] ?>" data-status="<?= $req['status'] ?>" title="Approve">✅</button>
@@ -285,7 +285,7 @@ $('.btn-view').on('click', function() {
         let id = $(this).data('id');
         let status = $(this).data('status');
         let researchTitle = row.find('td:nth-child(4)').text();
-        let msg = status === 'extendRequested' 
+        let msg = status === 'extendRequested'
             ? `Approve the extension request for "${researchTitle}"?`
             : `Approve the request for "${researchTitle}"?`;
         showActionModal(msg, false, function() {

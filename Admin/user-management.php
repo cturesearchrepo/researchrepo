@@ -1,11 +1,11 @@
 <?php
-$servername = "localhost"; 
-$username = "root"; 
-$password = ""; 
-$dbname = "CentralizedResearchRepository_userdb"; 
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "CentralizedResearchRepository_userdb";
 
-$conn = new mysqli($servername, $username, $password, $dbname); 
-if ($conn->connect_error) { die("Connection failed: " . $conn->connect_error); } 
+$conn = new mysqli("sql207.infinityfree.com", "if0_40577910", "CTURepo2025", "if0_40577910_repo_db");
+if ($conn->connect_error) { die("Connection failed: " . $conn->connect_error); }
 
 $successMsg = $errorMsg = "";
 
@@ -49,14 +49,14 @@ $studentResult = $conn->query("SELECT id, student_id, fullname, email, year_leve
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <style>
 .modal-profile {
-    width: 100px;         
-    height: 100px;            
-    border-radius: 50%;       
-    display: block;         
-    margin: 0 auto 15px auto; 
-    object-fit: cover;      
-    border: 2px solid #ccc;   
-    box-shadow: 0 2px 8px rgba(0,0,0,0.2); 
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    display: block;
+    margin: 0 auto 15px auto;
+    object-fit: cover;
+    border: 2px solid #ccc;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
 }
 
 </style>
@@ -88,8 +88,8 @@ $studentResult = $conn->query("SELECT id, student_id, fullname, email, year_leve
             <?php if($facultyResult && $facultyResult->num_rows>0): ?>
                 <?php while($f=$facultyResult->fetch_assoc()): ?>
                 <tr>
-                    <td><img src="<?= !empty($f['profile_image']) 
-                        ? '../Users/Public/uploads/faculty/' . htmlspecialchars($f['profile_image']) 
+                    <td><img src="<?= !empty($f['profile_image'])
+                        ? '../Users/Public/uploads/faculty/' . htmlspecialchars($f['profile_image'])
                         : '../Photos/logoCtu.png'; ?>" class="user-thumb"></td>
                     <td><?= htmlspecialchars($f['faculty_id']); ?></td>
                     <td><?= htmlspecialchars($f['fullname']); ?></td>
@@ -99,12 +99,12 @@ $studentResult = $conn->query("SELECT id, student_id, fullname, email, year_leve
                     <td>
                         <div class="action-buttons">
                             <?php if(strtolower($f['status'])==='pending'): ?>
-                            <button type="button" class="open-approve approve-btn" 
-                                data-id="<?= $f['id']; ?>" 
-                                data-type="faculty" 
-                                data-name="<?= htmlspecialchars($f['fullname']); ?>" 
-                                data-email="<?= htmlspecialchars($f['email']); ?>" 
-                                data-userid="<?= htmlspecialchars($f['faculty_id']); ?>" 
+                            <button type="button" class="open-approve approve-btn"
+                                data-id="<?= $f['id']; ?>"
+                                data-type="faculty"
+                                data-name="<?= htmlspecialchars($f['fullname']); ?>"
+                                data-email="<?= htmlspecialchars($f['email']); ?>"
+                                data-userid="<?= htmlspecialchars($f['faculty_id']); ?>"
                                 data-profile="<?= !empty($f['profile_image']) ? '../Users/Public/uploads/faculty/' . htmlspecialchars($f['profile_image']) : '../Photos/logoCtu.png'; ?>">
                                 <i class="fa-solid fa-check"></i>
                             </button>
@@ -133,8 +133,8 @@ $studentResult = $conn->query("SELECT id, student_id, fullname, email, year_leve
             <?php if($studentResult && $studentResult->num_rows>0): ?>
                 <?php while($s=$studentResult->fetch_assoc()): ?>
                 <tr>
-                    <td><img src="<?= !empty($s['profile_image']) 
-                        ? '../Users/Public/uploads/students/' . htmlspecialchars($s['profile_image']) 
+                    <td><img src="<?= !empty($s['profile_image'])
+                        ? '../Users/Public/uploads/students/' . htmlspecialchars($s['profile_image'])
                         : '../Photos/logoCTU.png'; ?>" class="user-thumb"></td>
                     <td><?= htmlspecialchars($s['student_id']); ?></td>
                     <td><?= htmlspecialchars($s['fullname']); ?></td>
@@ -144,12 +144,12 @@ $studentResult = $conn->query("SELECT id, student_id, fullname, email, year_leve
                     <td>
                         <div class="action-buttons">
                             <?php if(strtolower($s['status'])==='pending'): ?>
-                            <button type="button" class="open-approve approve-btn" 
-                                data-id="<?= $s['id']; ?>" 
-                                data-type="student" 
-                                data-name="<?= htmlspecialchars($s['fullname']); ?>" 
-                                data-email="<?= htmlspecialchars($s['email']); ?>" 
-                                data-userid="<?= htmlspecialchars($s['student_id']); ?>" 
+                            <button type="button" class="open-approve approve-btn"
+                                data-id="<?= $s['id']; ?>"
+                                data-type="student"
+                                data-name="<?= htmlspecialchars($s['fullname']); ?>"
+                                data-email="<?= htmlspecialchars($s['email']); ?>"
+                                data-userid="<?= htmlspecialchars($s['student_id']); ?>"
                                 data-profile="<?= !empty($s['profile_image']) ? '../Users/Public/uploads/students/' . htmlspecialchars($s['profile_image']) : '../Photos/logoCTU.png'; ?>">
                                 <i class="fa-solid fa-check"></i>
                             </button>

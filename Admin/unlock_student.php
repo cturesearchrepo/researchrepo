@@ -1,7 +1,7 @@
 <?php
 // unlock_student.php
 header('Content-Type: application/json; charset=utf-8');
-$mysqli = new mysqli("localhost","root","","CentralizedResearchRepository_userdb");
+$mysqli = new mysqli("sql207.infinityfree.com", "if0_40577910", "CTURepo2025", "if0_40577910_repo_db");
 if ($mysqli->connect_error) {
     echo json_encode(['status'=>'error','message'=>'DB connection failed']); exit;
 }

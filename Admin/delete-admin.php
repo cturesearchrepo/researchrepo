@@ -1,11 +1,5 @@
 <?php
-$servername = "localhost";
-$username   = "root";
-$password   = "";
-$dbname     = "CentralizedResearchRepository_userdb";
-
-// Connect to DB
-$conn = new mysqli($servername, $username, $password, $dbname);
+$conn = new mysqli("sql207.infinityfree.com", "if0_40577910", "CTURepo2025", "if0_40577910_repo_db");
 if ($conn->connect_error) {
   die("Connection failed: " . $conn->connect_error);
 }

@@ -4,13 +4,8 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 header('Content-Type: application/json');
 
-$servername = "localhost";
-$username   = "root";
-$password   = "";
-$dbname     = "CentralizedResearchRepository_userdb";
-
 try {
-    $conn = new mysqli($servername, $username, $password, $dbname);
+    $conn = new mysqli("sql207.infinityfree.com", "if0_40577910", "CTURepo2025", "if0_40577910_repo_db");
     if ($conn->connect_error) {
         throw new Exception("DB connection failed: " . $conn->connect_error);
     }
@@ -75,7 +70,7 @@ try {
     }
     // 2) If user selected an avatar instead
     elseif ($avatar !== '') {
-        $avatarPath = "uploads/admins/avatars/" . basename($avatar); 
+        $avatarPath = "uploads/admins/avatars/" . basename($avatar);
         if (file_exists($avatarPath)) {
             $profilePath = $avatarPath;
         }

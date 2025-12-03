@@ -11,7 +11,7 @@ $username = "root";
 $password = "";
 $dbname = "CentralizedResearchRepository_userdb";
 
-$conn = new mysqli($servername, $username, $password, $dbname);
+$conn = new mysqli("sql207.infinityfree.com", "if0_40577910", "CTURepo2025", "if0_40577910_repo_db");
 if ($conn->connect_error) {
     echo json_encode(["success" => false, "message" => "DB connection failed."]);
     exit;
@@ -25,7 +25,7 @@ if ($requestId <= 0) {
     exit;
 }
 
-$sql = "UPDATE research_access_requests 
+$sql = "UPDATE research_access_requests
         SET status = 'extendRequested', requested_at = NOW()
         WHERE id = ? AND student_id = ? AND status IN ('expired', 'approved')";
 

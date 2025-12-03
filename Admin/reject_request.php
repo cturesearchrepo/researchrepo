@@ -10,7 +10,7 @@ if (!$reason) {
     exit;
 }
 
-$conn = new mysqli("localhost","root","","CentralizedResearchRepository_userdb");
+$conn = new mysqli("sql207.infinityfree.com", "if0_40577910", "CTURepo2025", "if0_40577910_repo_db");
 if ($conn->connect_error) die("Connection failed: ".$conn->connect_error);
 
 if ($status === 'extendRequested') {

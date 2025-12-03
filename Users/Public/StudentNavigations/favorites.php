@@ -1,10 +1,5 @@
 <?php
-$servername = "localhost";
-$username   = "root";
-$password   = "";
-$dbname     = "CentralizedResearchRepository_userdb";
-
-$mysqli = new mysqli($servername, $username, $password, $dbname);
+$mysqli = new mysqli("sql207.infinityfree.com", "if0_40577910", "CTURepo2025", "if0_40577910_repo_db");
 if ($mysqli->connect_error) {
     die("Connection failed: " . $mysqli->connect_error);
 }
@@ -83,7 +78,7 @@ SELECT f.id AS fav_id, f.created_at,
        ra.id AS request_id, ra.status, ra.expire_at
 FROM favorites f
 JOIN research_documents rd ON f.research_id = rd.id
-LEFT JOIN research_access_requests ra 
+LEFT JOIN research_access_requests ra
        ON ra.research_id = rd.id AND ra.student_id = ?
 WHERE f.student_id = ?
 ORDER BY f.created_at DESC
@@ -390,8 +385,8 @@ td:last-child {
   <td><?= htmlspecialchars($fav['research_author']) ?></td>
   <td class="small-muted"><?= date("M. d, Y h:i A", strtotime($fav['created_at'])) ?></td>
   <td>
-    <?php if (!empty($fav['request_id']) 
-          && strtolower($fav['status']) === 'approved' 
+    <?php if (!empty($fav['request_id'])
+          && strtolower($fav['status']) === 'approved'
           && strtotime($fav['expire_at']) > time()): ?>
     <a href="view_research.php?id=<?= $fav['request_id'] ?>" target="_blank" class="btn-action">View</a>
 <?php endif; ?>
