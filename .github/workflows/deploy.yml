@@ -3,22 +3,30 @@ name: FTP Deploy to InfinityFree
 on:
   push:
     branches:
-      - main
+      - main   # deploy when pushing to main branch
 
 jobs:
   ftp-deploy:
     runs-on: ubuntu-latest
+    environment: FTP_HOST   # must match your environment name exactly
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      - name: Setup Node.js (required by FTP Deploy action)
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
       - name: FTP Deploy
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.6
+        uses: SamKirkland/FTP-Deploy-Action@4.0.0
         with:
           server: ${{ secrets.FTP_HOST }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          protocol: ftp
-          port: 21
-          local-dir: ./
-          server-dir: /htdocs/
+          protocol: ftp          # InfinityFree uses FTP
+          port: 21               # default FTP port
+          local-dir: ./          # the folder to upload (your repo root)
+          server-dir: /htdocs    # InfinityFree root folder
+          log-level: verbose     # optional, shows more logs
