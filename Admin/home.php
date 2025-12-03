@@ -8,8 +8,8 @@ if ($mysqli->connect_error) {
 
 $totalStudents = $mysqli->query("SELECT COUNT(*) as total FROM students WHERE status = 'active'")->fetch_assoc()['total'];
 $result = $mysqli->query("
-    SELECT 
-        CASE 
+    SELECT
+        CASE
             WHEN status IN ('ApprovedbyAdmin','Active') THEN 'approved'
             WHEN status = 'RejectedbyAdmin' THEN 'rejected'
             WHEN status = 'pending' THEN 'pending'
@@ -29,8 +29,8 @@ while ($row = $result->fetch_assoc()) {
 $totalResearch = $mysqli->query("SELECT COUNT(*) as total FROM research_documents")->fetch_assoc()['total'];
 
 $recentUploads = $mysqli->query("
-    SELECT COUNT(*) as count 
-    FROM research_documents 
+    SELECT COUNT(*) as count
+    FROM research_documents
     WHERE uploaded_at >= DATE_SUB(NOW(), INTERVAL 7 DAY)
 ")->fetch_assoc()['count'];
 
@@ -90,7 +90,7 @@ $topViewed = $mysqli->query("
 <section class="welcome-section">
     <h3>Welcome, <?= htmlspecialchars($userName) ?>!</h3>
     <p>
-        This system helps you manage research documents efficiently, monitor approvals, 
+        This system helps you manage research documents efficiently, monitor approvals,
         and keep track of recent uploads. Stay updated with the latest student submissions.
     </p>
 </section>
@@ -183,7 +183,7 @@ $topViewed = $mysqli->query("
                 <td><?= htmlspecialchars($row['year_completed']) ?></td>
                 <td><?= $row['total_views'] ?></td>
                 <td>
-                    <?php 
+                    <?php
                         $avg = round($row['avg_rating'], 1);
                         $fullStars = floor($avg);
                         $halfStar = ($avg - $fullStars) >= 0.5 ? 1 : 0;
@@ -222,9 +222,9 @@ function createSpark(ctx, data, color) {
         options: {
             responsive: true,
             maintainAspectRatio: false,
-            plugins: { 
-                legend: { display: false }, 
-                tooltip: { enabled: true, mode: 'index', intersect: false } 
+            plugins: {
+                legend: { display: false },
+                tooltip: { enabled: true, mode: 'index', intersect: false }
             },
             scales: { y: { display: false }, x: { display: false } },
             elements: { line: { borderWidth: 2 } }
@@ -238,7 +238,7 @@ createSpark(document.getElementById('sparkRejected'), [1,0,2,1,0], '#ef4444');
 createSpark(document.getElementById('sparkTotal'), [10,15,12,14,11], '#3b82f6');
 createSpark(document.getElementById('sparkRecent'), [2,3,1,4,2], '#8b5cf6');
 let analyticsChart = null;
-let currentType = null; 
+let currentType = null;
 
 async function loadAnalytics(type, title, color) {
     currentType = type;
@@ -298,7 +298,7 @@ document.querySelectorAll(".card").forEach(card => {
             recent: "Recent Uploads Analytics"
         };
         const colors = {
-            approved: "#10b981",
+            approved: "#0fd694ff",
             pending: "#f59e0b",
             rejected: "#ef4444",
             total: "#3b82f6",
