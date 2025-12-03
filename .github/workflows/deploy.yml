@@ -3,7 +3,7 @@ name: FTP Deploy to InfinityFree
 on:
   push:
     branches:
-      - main   # Deploy when you push to main branch
+      - main
 
 jobs:
   ftp-deploy:
@@ -12,12 +12,13 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Set up FTP Deploy
-        uses: SamKirkland/FTP-Deploy-Action@4.1.0
+      - name: FTP Deploy
+        uses: SamKirkland/FTP-Deploy-Action@v4
         with:
           server: ${{ secrets.FTP_HOST }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: ./          # Root of your repo
-          server-dir: /htdocs/   # InfinityFree default folder
-          git-ftp-args: --insecure
+          protocol: ftp
+          port: 21
+          local-dir: ./
+          server-dir: /htdocs/
