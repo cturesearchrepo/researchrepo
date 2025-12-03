@@ -25,8 +25,8 @@ jobs:
           server: ${{ secrets.FTP_HOST }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          protocol: ftp          # InfinityFree uses FTP
-          port: 21               # default FTP port
-          local-dir: ./          # the folder to upload (your repo root)
-          server-dir: /htdocs    # InfinityFree root folder
-          log-level: verbose     # optional, shows more logs
+          protocol: ftp
+          port: 21
+          local-dir: ./          # path to your repo root
+          server-dir: /htdocs/   # ⚠️ Must end with a trailing slash
+          log-level: verbose
