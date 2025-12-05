@@ -1,5 +1,5 @@
 <?php
-include __DIR__ . '/../../db_connect.php';
+include __DIR__ . '/db_connect.php';
 
 function sanitize($conn, $input) {
     return htmlspecialchars(mysqli_real_escape_string($conn, trim($input)));

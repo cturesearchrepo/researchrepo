@@ -1,5 +1,5 @@
 <?php
-include __DIR__ . '/../../db_connect.php';
+include __DIR__ . '/db_connect.php';
 
 // Helper function to send JSON responses
 function sendResponse($status, $message) {
