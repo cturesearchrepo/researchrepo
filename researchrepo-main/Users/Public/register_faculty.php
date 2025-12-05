@@ -1,8 +1,19 @@
 <?php
-include __DIR__ . '/db_connect.php';
+const DB_HOST = "sql207.infinityfree.com";
+const DB_USER = "if0_40577910";
+const DB_PASS = "CTURepo2025";
+const DB_NAME = "if0_40577910_repo_db";
 
-function sanitize($conn, $input) {
-    return htmlspecialchars(mysqli_real_escape_string($conn, trim($input)));
+$conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+if ($conn->connect_error) {
+    die(json_encode(['status' => 'error', 'message' => 'Database connection failed.']));
+}
+
+
+function sendResponse($status, $message) {
+    header('Content-Type: application/json');
+    echo json_encode(['status' => $status, 'message' => $message]);
+    exit;
 }
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {

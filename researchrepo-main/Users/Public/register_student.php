@@ -1,14 +1,25 @@
 <?php
-include __DIR__ . '/db_connect.php';
 
-// Helper function to send JSON responses
+const DB_HOST = "sql207.infinityfree.com";
+const DB_USER = "if0_40577910";
+const DB_PASS = "CTURepo2025";
+const DB_NAME = "if0_40577910_repo_db";
+
+$conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+if ($conn->connect_error) {
+    die(json_encode(['status' => 'error', 'message' => 'Database connection failed.']));
+}
+
+
 function sendResponse($status, $message) {
     header('Content-Type: application/json');
     echo json_encode(['status' => $status, 'message' => $message]);
     exit;
 }
 
-// Collect POST data safely
+// =========================
+// COLLECT POST DATA
+// =========================
 $fullname   = trim($_POST['fullname'] ?? '');
 $username   = trim($_POST['username'] ?? '');
 $student_id = trim($_POST['studentid'] ?? '');
@@ -17,22 +28,22 @@ $phone      = trim($_POST['number'] ?? '');
 $password   = $_POST['password'] ?? '';
 $year_level = $_POST['year_level'] ?? 'first';
 
-// Validate required fields
+// =========================
+// VALIDATION
+// =========================
 if (!$fullname || !$username || !$student_id || !$email || !$phone || !$password) {
     sendResponse('error', 'All fields are required.');
 }
 
-// Validate email format
 if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
     sendResponse('error', 'Invalid email format.');
 }
 
-// Validate student ID (digits only, 8-10 characters)
 if (!preg_match('/^[0-9]{8,10}$/', $student_id)) {
     sendResponse('error', 'Invalid Student ID format.');
 }
 
-// Map year level
+// Year level mapping
 $yearOptions = [
     "first"  => "First Year",
     "second" => "Second Year",
@@ -41,7 +52,9 @@ $yearOptions = [
 ];
 $year_level = $yearOptions[strtolower($year_level)] ?? "First Year";
 
-// Check for duplicates in DB
+// =========================
+// CHECK DUPLICATES
+// =========================
 $checkQuery = "SELECT student_id, email, username FROM students WHERE student_id = ? OR email = ? OR username = ?";
 $checkStmt = $conn->prepare($checkQuery);
 $checkStmt->bind_param("sss", $student_id, $email, $username);
@@ -59,13 +72,16 @@ if ($checkResult->num_rows > 0) {
 }
 $checkStmt->close();
 
-// Hash password securely
+// =========================
+// PASSWORD HASHING
+// =========================
 $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
-// Default profile image
+// =========================
+// PROFILE IMAGE HANDLING
+// =========================
 $profileName = "logoCtu.png";
 
-// Handle profile upload
 if (isset($_FILES['profile']) && $_FILES['profile']['error'] === UPLOAD_ERR_OK) {
     $uploadDir = __DIR__ . "/uploads/students/";
     if (!is_dir($uploadDir)) mkdir($uploadDir, 0755, true);
@@ -76,7 +92,7 @@ if (isset($_FILES['profile']) && $_FILES['profile']['error'] === UPLOAD_ERR_OK) 
     $fileSize = filesize($tmpName);
 
     $allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
-    $maxSize = 2 * 1024 * 1024; // 2 MB
+    $maxSize = 2 * 1024 * 1024;
 
     if (!in_array($fileType, $allowedTypes)) {
         sendResponse('error', 'Only JPG, PNG, GIF files are allowed.');
@@ -86,7 +102,6 @@ if (isset($_FILES['profile']) && $_FILES['profile']['error'] === UPLOAD_ERR_OK) 
         sendResponse('error', 'Profile image exceeds 2MB.');
     }
 
-    // Use unique filename
     $ext = pathinfo($origName, PATHINFO_EXTENSION);
     $safeName = uniqid('profile_', true) . "." . $ext;
 
@@ -95,7 +110,9 @@ if (isset($_FILES['profile']) && $_FILES['profile']['error'] === UPLOAD_ERR_OK) 
     }
 }
 
-// Insert student into database
+// =========================
+// INSERT INTO DATABASE
+// =========================
 $insertStmt = $conn->prepare("
     INSERT INTO students (
         fullname, username, student_id, email, phone, password, profile_image, status, year_level
