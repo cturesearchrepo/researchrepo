@@ -13,7 +13,7 @@ $id_col  = 'student_id';
 $redirect = '../Public/StudentNavigations/Student_Dashboard.php';
 
 // Database connection
-$conn = new mysqli('localhost','root','','CentralizedResearchRepository_userdb');
+$conn = new mysqli("sql207.infinityfree.com", "if0_40577910", "CTURepo2025", "if0_40577910_repo_db");
 if ($conn->connect_error) die("DB connection failed: ".$conn->connect_error);
 
 // Handle form submission
