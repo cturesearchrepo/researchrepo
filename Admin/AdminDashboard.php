@@ -52,6 +52,7 @@ $type = $_GET['type'] ?? 'research'; // Archive type dropdown default
 <head>
 <meta charset="UTF-8" />
 <title>Admin Dashboard</title>
+<link rel="icon" type="image/png" href="Photos/logoCTU.png">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <style>
 body {

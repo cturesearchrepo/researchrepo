@@ -86,7 +86,8 @@ $conn->close();
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>View Research - <?= htmlspecialchars($data['title']) ?></title>
+<title><?= htmlspecialchars($data['title']) ?></title>
+<link rel="icon" type="image/png" href="Photos/logoCTU.png">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.7.107/pdf.min.js"></script>
 <style>
 body { margin:0; font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background:#f0f2f5; color:#333; user-select:none; }

@@ -7,6 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Faculty Registration</title>
 <link rel="stylesheet" href="facultystyle.css" />
+<link rel="icon" type="image/png" href="Photos/logoCTU.png">
 <style>
   .error-message-global { color: red; font-weight: 500; margin-bottom: 15px; display: none; }
   .valid { color: green !important; }

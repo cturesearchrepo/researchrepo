@@ -52,6 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Administrator Login</title>
   <link rel="stylesheet" href="./AllStyles/adminloginstyle.css" />
+  <link rel="icon" type="image/png" href="Photos/logoCTU.png">
 </head>
 <body>
   <div class="container">

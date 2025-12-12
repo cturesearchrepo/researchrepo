@@ -7,8 +7,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Portal Registration</title>
+  <title>Users Registration</title>
   <link rel="stylesheet" href="UsersStyle.css" />
+  <link rel="icon" type="image/png" href="Photos/logoCTU.png">
 </head>
 <body>
   <div class="container">
@@ -21,7 +22,7 @@
     <div class="right-side">
       <div class="heading">
         <div class="bar"></div>
-        <h1><span>Portal</span> Registration</h1>
+        <h1><span>Users</span> Registration</h1>
       </div>
 
       <p>Online Research Library System – Cebu Technological University</p>
